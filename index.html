@@ -1850,9 +1850,11 @@
         <div class="ai-message bot">你好！我是严志辉的AI助手，有什么可以帮你的吗？</div>
       </div>
       <div class="ai-quick-actions">
-        <button class="ai-quick-btn" data-message="介绍一下你的项目">查看项目</button>
+        <button class="ai-quick-btn" data-message="介绍一下你的项目">项目介绍</button>
         <button class="ai-quick-btn" data-message="你擅长什么技术？">技术能力</button>
-        <button class="ai-quick-btn" data-message="如何联系你？">联系方式</button>
+        <button class="ai-quick-btn" data-message="如何联系你？">联系合作</button>
+        <button class="ai-quick-btn" data-message="最近有什么技术趋势？">技术趋势</button>
+        <button class="ai-quick-btn" data-message="能帮我做什么？">我能帮你</button>
       </div>
       <div class="ai-chat-input-area">
         <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="输入消息...">
@@ -1939,21 +1941,35 @@
       model: 'mimo-v2.5-pro'
     };
 
-    // 系统提示词
-    const SYSTEM_PROMPT = `你是严志辉的AI助手，严志辉是一名AI辅助开发工程师。
+    // 系统提示词 - 更智能
+    const SYSTEM_PROMPT = `你是严志辉的AI助手，一个智能、专业、友好的虚拟助手。
 
-关于严志辉的信息：
-- 专注于AI辅助开发，使用AI Agent构建数字产品
-- 三个核心项目：Electron智能便签工具、AI助手系统、Apple风格网站
-- 技术能力：AI开发(LLM API、Agent开发)、Web开发(HTML/CSS/JS)、UI设计、产品设计
-- 工作经历：2024至今 AI辅助开发工程师，2023-2024 前端开发工程师
-- 教育背景：计算机科学与技术本科
+【关于严志辉】
+- 身份：AI辅助开发工程师
+- 专长：使用AI Agent构建数字产品，连接设计与开发
+- 核心项目：
+  1. Electron智能便签工具 - 桌面端效率工具
+  2. 本地AI助手系统 - 集成Ollama/DeepSeek/Qwen
+  3. 产品展示网站 - Apple风格设计与开发
+- 技能矩阵：AI Agent、MimoCode、OpenCode、Prompt设计、HTML/CSS/JS、Ollama、DeepSeek、Qwen、UI/UX设计
+- 工作经历：浙江格子商务(销售专员)、宁波铭点装饰(项目助理)、竞途网络(服务顾问)
+- 教育：浙江纺织服装职业技术学院 - 环境艺术设计（软装方向）
+- 成就：独立运营短视频内容，累计播放量150W+
+- 联系方式：187 5707 3254 / 3220389580@qq.com
+- GitHub：https://github.com/builan14031981-sketch
 
-你的职责：
-1. 回答关于严志辉的项目、技能、经历的问题
-2. 提供技术相关的咨询
-3. 保持友好、专业的语气
-4. 回答简洁明了，适合聊天窗口展示`;
+【你的能力】
+1. 回答关于严志辉的一切问题（项目、技能、经历、联系方式）
+2. 提供技术咨询（AI开发、Web开发、设计相关）
+3. 可以讨论技术趋势、行业动态
+4. 帮助访客了解如何与严志辉合作
+5. 回答通用问题，展现智能助手的能力
+
+【回复风格】
+- 友好、专业、简洁
+- 使用emoji增加亲和力
+- 回答控制在3-5句话内
+- 如果不确定，诚实说明`;
 
     // 对话历史
     let conversationHistory = [
@@ -1985,7 +2001,7 @@
       if (loading) loading.remove();
     }
 
-    // 调用API
+    // 调用API - 支持联网搜索
     async function callAI(userMessage) {
       conversationHistory.push({ role: 'user', content: userMessage });
 
@@ -2000,7 +2016,27 @@
             model: API_CONFIG.model,
             messages: conversationHistory,
             temperature: 0.7,
-            max_tokens: 500
+            max_tokens: 800,
+            tools: [
+              {
+                type: "function",
+                function: {
+                  name: "web_search",
+                  description: "搜索互联网获取最新信息",
+                  parameters: {
+                    type: "object",
+                    properties: {
+                      query: {
+                        type: "string",
+                        description: "搜索关键词"
+                      }
+                    },
+                    required: ["query"]
+                  }
+                }
+              }
+            ],
+            tool_choice: "auto"
           })
         });
 
