@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>严志辉 - AI辅助开发工程师</title>
+  <style>
+    /* ========== 全局重置与基础变量 ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* Apple官方配色体系 */
+      --accent-blue: #0071e3;
+      --accent-blue-hover: #0077ed;
+      --text-primary: #1d1d1f;
+      --text-secondary: #86868b;
+      --text-tertiary: #6e6e73;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f5f5f7;
+      --bg-tertiary: #fbfbfd;
+      --border-color: #d2d2d7;
+      --border-light: rgba(0, 0, 0, 0.08);
+      
+      /* 圆角规范 */
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 28px;
+      --radius-2xl: 40px;
+      
+      /* 间距规范 */
+      --gap-xs: 8px;
+      --gap-sm: 16px;
+      --gap-md: 24px;
+      --gap-lg: 48px;
+      --gap-xl: 80px;
+      --gap-2xl: 120px;
+      
+      /* 动画时间 */
+      --transition-fast: 0.2s ease;
+      --transition-normal: 0.3s ease;
+      --transition-slow: 0.5s cubic-bezier(0.28, 0.11, 0.32, 1);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", 
+                   "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* ========== 页面加载动画 ========== */
+    .page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-primary);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .page-loader.loaded {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-content {
+      text-align: center;
+    }
+
+    .loader-logo {
+      font-size: 48px;
+      font-weight: 600;
+      letter-spacing: -2px;
+      color: var(--text-primary);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .loader-bar {
+      width: 120px;
+      height: 3px;
+      background: var(--border-color);
+      border-radius: 2px;
+      overflow: hidden;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeIn 0.4s ease 0.3s forwards;
+    }
+
+    .loader-bar::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: var(--text-primary);
+      border-radius: 2px;
+      animation: loading 1.2s ease-in-out;
+    }
+
+    @keyframes loading {
+      0% { transform: translateX(-100%); }
+      50% { transform: translateX(0); }
+      100% { transform: translateX(100%); }
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ========== 毛玻璃导航栏 ========== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      transform: translateY(-100%);
+      animation: slideDown 0.6s ease 1.4s forwards;
+    }
+
+    @keyframes slideDown {
+      to { transform: translateY(0); }
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text-primary);
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity var(--transition-fast);
+      letter-spacing: -0.2px;
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+    }
+
+    .nav-cta {
+      padding: 8px 18px;
+      background: var(--accent-blue);
+      color: white !important;
+      border-radius: 980px;
+      opacity: 1 !important;
+      transition: background var(--transition-fast) !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--accent-blue-hover);
+    }
+
+    /* ========== 通用Section样式 ========== */
+    .section {
+      padding: var(--gap-2xl) 0;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: var(--gap-xl);
+    }
+
+    .section-eyebrow {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      letter-spacing: -0.3px;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 56px;
+      font-weight: 600;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .section-subtitle {
+      font-size: 21px;
+      color: var(--text-secondary);
+      letter-spacing: -0.3px;
+      line-height: 1.5;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ========== Hero首屏 ========== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 52px;
+      background: var(--bg-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 50%, rgba(0, 113, 227, 0.03) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 50%, rgba(88, 86, 214, 0.03) 0%, transparent 50%);
+      animation: heroGlow 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroGlow {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(-5%, 5%); }
+    }
+
+    .hero-content {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      padding: 0 40px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--bg-secondary);
+      border-radius: 980px;
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease 1.6s forwards;
+    }
+
+    .hero-badge-dot {
+      width: 8px;
+      height: 8px;
+      background: #34c759;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .hero-title {
+      font-size: 80px;
+      font-weight: 600;
+      letter-spacing: -4px;
+      line-height: 1.05;
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s ease 1.8s forwards;
+    }
+
+    .hero-title-gradient {
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-blue) 50%, #5856d6 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 8s ease-in-out infinite;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .hero-subtitle {
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease 2s forwards;
+    }
+
+    .hero-description {
+      font-size: 19px;
+      color: var(--text-tertiary);
+      max-width: 500px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease 2.2s forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease 2.4s forwards;
+    }
+
+    .hero-scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 2.8s forwards;
+    }
+
+    .scroll-mouse {
+      width: 24px;
+      height: 36px;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .scroll-mouse::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 8px;
+      background: var(--text-secondary);
+      border-radius: 2px;
+      animation: scrollDown 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollDown {
+      0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(12px); }
+    }
+
+    .scroll-text {
+      font-size: 12px;
+      color: var(--text-secondary);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ========== 按钮样式 ========== */
+    .btn-primary {
+      padding: 14px 28px;
+      background: var(--accent-blue);
+      color: white;
+      border: none;
+      border-radius: 980px;
+      font-size: 17px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-blue-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 113, 227, 0.3);
+    }
+
+    .btn-secondary {
+      padding: 14px 28px;
+      background: transparent;
+      color: var(--accent-blue);
+      border: 1px solid var(--accent-blue);
+      border-radius: 980px;
+      font-size: 17px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(0, 113, 227, 0.05);
+      transform: translateY(-2px);
+    }
+
+    .btn-icon {
+      font-size: 20px;
+      transition: transform var(--transition-fast);
+    }
+
+    .btn-primary:hover .btn-icon,
+    .btn-secondary:hover .btn-icon {
+      transform: translateX(4px);
+    }
+
+    /* ========== 项目展示区 ========== */
+    .projects {
+      background: var(--bg-secondary);
+    }
+
+    .project-showcase {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-2xl);
+    }
+
+    .project-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--gap-xl);
+      align-items: center;
+    }
+
+    .project-item.reverse {
+      direction: rtl;
+    }
+
+    .project-item.reverse > * {
+      direction: ltr;
+    }
+
+    .project-visual {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+
+    .project-visual:hover {
+      transform: scale(1.03);
+    }
+
+    .project-visual-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: white;
+      padding: 40px;
+    }
+
+    .project-visual-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .project-visual-title {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+
+    .project-visual::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(0, 113, 227, 0.3) 0%, transparent 60%);
+    }
+
+    .project-info {
+      padding: 20px 0;
+    }
+
+    .project-category {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .project-title {
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .project-description {
+      font-size: 17px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .project-tag {
+      padding: 6px 14px;
+      background: rgba(0, 113, 227, 0.08);
+      color: var(--accent-blue);
+      border-radius: 980px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent-blue);
+      font-size: 17px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: gap var(--transition-fast);
+    }
+
+    .project-link:hover {
+      gap: 12px;
+    }
+
+    .project-link-arrow {
+      font-size: 20px;
+      transition: transform var(--transition-fast);
+    }
+
+    .project-link:hover .project-link-arrow {
+      transform: translateX(4px);
+    }
+
+    /* ========== 技术能力展示 ========== */
+    .skills {
+      background: var(--bg-primary);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .skill-card {
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      transition: all var(--transition-slow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(0, 113, 227, 0.02) 0%, rgba(88, 86, 214, 0.02) 100%);
+      opacity: 0;
+      transition: opacity var(--transition-normal);
+    }
+
+    .skill-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+      border-color: rgba(0, 113, 227, 0.2);
+    }
+
+    .skill-card:hover::before {
+      opacity: 1;
+    }
+
+    .skill-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--accent-blue) 0%, #5856d6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .skill-title {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+      position: relative;
+      z-index: 1;
+    }
+
+    .skill-description {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .skill-tag {
+      padding: 6px 12px;
+      background: var(--bg-secondary);
+      border-radius: 980px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      letter-spacing: -0.2px;
+    }
+
+    /* ========== 个人信息 ========== */
+    .about {
+      background: var(--bg-secondary);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--gap-xl);
+    }
+
+    .about-main h3 {
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -1px;
+      margin-bottom: 24px;
+      color: var(--text-primary);
+    }
+
+    .about-text {
+      font-size: 17px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .about-highlights {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .highlight-item {
+      padding: 24px;
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+    }
+
+    .highlight-number {
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      letter-spacing: -1px;
+      margin-bottom: 4px;
+    }
+
+    .highlight-label {
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+
+    .about-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .sidebar-section {
+      padding: 32px;
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+    }
+
+    .sidebar-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      letter-spacing: -0.3px;
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 20px;
+      border-left: 2px solid var(--border-color);
+    }
+
+    .timeline-item:last-child {
+      border-left-color: transparent;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -5px;
+      top: 4px;
+      width: 8px;
+      height: 8px;
+      background: var(--accent-blue);
+      border-radius: 50%;
+    }
+
+    .timeline-date {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+
+    .timeline-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .timeline-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .links-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      color: var(--text-primary);
+      font-size: 15px;
+      transition: all var(--transition-fast);
+    }
+
+    .link-item:hover {
+      background: var(--accent-blue);
+      color: white;
+    }
+
+    .link-icon {
+      font-size: 20px;
+    }
+
+    /* ========== 页脚 ========== */
+    .footer {
+      background: var(--bg-primary);
+      padding: 48px 0 32px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand {
+      max-width: 300px;
+    }
+
+    .footer-logo {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .footer-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 80px;
+    }
+
+    .footer-column h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-column a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    .footer-column a:hover {
+      color: var(--text-primary);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .footer-copyright {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-legal a {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    .footer-legal a:hover {
+      color: var(--text-primary);
+    }
+
+    /* ========== AI助手按钮 ========== */
+    .ai-assistant {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 999;
+    }
+
+    .ai-button {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--accent-blue) 0%, #5856d6 100%);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(0, 113, 227, 0.3);
+      transition: all var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ai-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+
+    .ai-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 40px rgba(0, 113, 227, 0.4);
+    }
+
+    .ai-button:hover::before {
+      opacity: 1;
+    }
+
+    .ai-button-icon {
+      font-size: 28px;
+      color: white;
+      position: relative;
+      z-index: 1;
+      transition: transform var(--transition-fast);
+    }
+
+    .ai-button:hover .ai-button-icon {
+      transform: scale(1.1);
+    }
+
+    .ai-button-pulse {
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      border: 2px solid var(--accent-blue);
+      border-radius: 50%;
+      animation: aiPulse 2s ease-out infinite;
+    }
+
+    @keyframes aiPulse {
+      0% { transform: scale(1); opacity: 0.6; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+
+    .ai-chat-window {
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      width: 380px;
+      background: white;
+      border-radius: var(--radius-xl);
+      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.15);
+      border: 1px solid var(--border-light);
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px) scale(0.95);
+      transition: all var(--transition-normal);
+    }
+
+    .ai-chat-window.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .ai-chat-header {
+      padding: 20px 24px;
+      background: linear-gradient(135deg, var(--accent-blue) 0%, #5856d6 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ai-chat-header-title {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .ai-chat-close {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 16px;
+      transition: background var(--transition-fast);
+    }
+
+    .ai-chat-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .ai-chat-messages {
+      padding: 24px;
+      height: 300px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .ai-message {
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      font-size: 15px;
+      line-height: 1.5;
+      animation: messageIn 0.3s ease;
+    }
+
+    @keyframes messageIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .ai-message.bot {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    .ai-message.user {
+      background: var(--accent-blue);
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .ai-chat-input-area {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      gap: 12px;
+    }
+
+    .ai-chat-input {
+      flex: 1;
+      padding: 12px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 980px;
+      font-size: 15px;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color var(--transition-fast);
+    }
+
+    .ai-chat-input:focus {
+      border-color: var(--accent-blue);
+    }
+
+    .ai-chat-input::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .ai-chat-send {
+      width: 44px;
+      height: 44px;
+      background: var(--accent-blue);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      transition: all var(--transition-fast);
+    }
+
+    .ai-chat-send:hover {
+      background: var(--accent-blue-hover);
+      transform: scale(1.05);
+    }
+
+    .ai-chat-send:disabled {
+      background: var(--border-color);
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .ai-quick-actions {
+      padding: 0 24px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .ai-quick-btn {
+      padding: 8px 14px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 980px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .ai-quick-btn:hover {
+      background: var(--accent-blue);
+      color: white;
+      border-color: var(--accent-blue);
+    }
+
+    /* AI加载动画 */
+    .ai-message.loading {
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    .loading-dots::after {
+      content: '';
+      animation: loadingDots 1.5s infinite;
+    }
+
+    @keyframes loadingDots {
+      0% { content: '.'; }
+      33% { content: '..'; }
+      66% { content: '...'; }
+    }
+
+    /* ========== 响应式适配 ========== */
+    @media (max-width: 1024px) {
+      .hero-title {
+        font-size: 64px;
+        letter-spacing: -3px;
+      }
+
+      .section-title {
+        font-size: 44px;
+      }
+
+      .project-item {
+        grid-template-columns: 1fr;
+        gap: var(--gap-lg);
+      }
+
+      .project-item.reverse {
+        direction: ltr;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-links {
+        gap: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 48px;
+        letter-spacing: -2px;
+      }
+
+      .hero-subtitle {
+        font-size: 22px;
+      }
+
+      .section {
+        padding: var(--gap-xl) 0;
+      }
+
+      .section-title {
+        font-size: 36px;
+        letter-spacing: -1.5px;
+      }
+
+      .section-subtitle {
+        font-size: 17px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-highlights {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-top {
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+
+      .ai-chat-window {
+        width: calc(100vw - 32px);
+        right: -16px;
+      }
+    }
+
+    /* ========== 滚动动画 ========== */
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-in-left {
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .fade-in-right {
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .scale-in {
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .scale-in.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 页面加载动画 -->
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-content">
+      <div class="loader-logo">YZH</div>
+      <div class="loader-bar"></div>
+    </div>
+  </div>
+
+  <!-- 毛玻璃导航栏 -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">严志辉</a>
+      <ul class="nav-links">
+        <li><a href="#projects">项目</a></li>
+        <li><a href="#skills">能力</a></li>
+        <li><a href="#about">关于</a></li>
+        <li><a href="#contact" class="nav-cta">联系我</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero首屏 -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        开放合作中
+      </div>
+      <h1 class="hero-title">
+        <span class="hero-title-gradient">严志辉</span>
+      </h1>
+      <p class="hero-subtitle">AI辅助开发工程师</p>
+      <p class="hero-description">使用AI Agent辅助构建数字产品，连接设计与开发</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary">
+          查看作品
+          <span class="btn-icon">→</span>
+        </a>
+        <a href="#contact" class="btn-secondary">联系我</a>
+      </div>
+    </div>
+    <div class="hero-scroll-indicator">
+      <div class="scroll-mouse"></div>
+      <span class="scroll-text">滚动探索</span>
+    </div>
+  </section>
+
+  <!-- 项目展示 -->
+  <section class="section projects" id="projects">
+    <div class="section-container">
+      <div class="section-header">
+        <p class="section-eyebrow">精选作品</p>
+        <h2 class="section-title">每个项目，都是一次创新</h2>
+        <p class="section-subtitle">从桌面应用到AI系统，用代码构建有价值的数字产品</p>
+      </div>
+      
+      <div class="project-showcase">
+        <!-- 项目1：Electron智能便签工具 -->
+        <div class="project-item fade-in-up">
+          <div class="project-visual">
+            <div class="project-visual-content">
+              <span class="project-visual-icon">📝</span>
+              <div class="project-visual-title">智能便签</div>
+            </div>
+          </div>
+          <div class="project-info">
+            <p class="project-category">桌面应用开发</p>
+            <h3 class="project-title">Electron智能便签工具</h3>
+            <p class="project-description">独立开发桌面端效率工具，探索个人信息管理和生产力工具设计。基于Electron框架，支持智能分类、数据同步和快捷操作。</p>
+            <div class="project-tags">
+              <span class="project-tag">Electron</span>
+              <span class="project-tag">桌面应用</span>
+              <span class="project-tag">AI Agent</span>
+            </div>
+            <a href="#" class="project-link">
+              了解项目详情
+              <span class="project-link-arrow">→</span>
+            </a>
+          </div>
+        </div>
+        
+        <!-- 项目2：AI助手系统 -->
+        <div class="project-item reverse fade-in-up">
+          <div class="project-visual" style="background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);">
+            <div class="project-visual-content">
+              <span class="project-visual-icon">🤖</span>
+              <div class="project-visual-title">AI助手</div>
+            </div>
+          </div>
+          <div class="project-info">
+            <p class="project-category">AI应用开发</p>
+            <h3 class="project-title">本地AI助手系统</h3>
+            <p class="project-description">搭建本地大语言模型运行环境，探索AI Agent自动化应用。集成Ollama、DeepSeek、Qwen等模型，实现智能化工作流。</p>
+            <div class="project-tags">
+              <span class="project-tag">Ollama</span>
+              <span class="project-tag">DeepSeek</span>
+              <span class="project-tag">Qwen</span>
+              <span class="project-tag">AI Agent</span>
+            </div>
+            <a href="#" class="project-link">
+              了解项目详情
+              <span class="project-link-arrow">→</span>
+            </a>
+          </div>
+        </div>
+        
+        <!-- 项目3：Apple风格网站 -->
+        <div class="project-item fade-in-up">
+          <div class="project-visual" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
+            <div class="project-visual-content">
+              <span class="project-visual-icon">🎨</span>
+              <div class="project-visual-title">Apple风格</div>
+            </div>
+          </div>
+          <div class="project-info">
+            <p class="project-category">Web前端开发</p>
+            <h3 class="project-title">产品展示网站设计与开发</h3>
+            <p class="project-description">参考Apple视觉语言完成产品展示网站设计，负责页面结构和交互体验。实现毛玻璃效果、流畅动效和响应式布局。</p>
+            <div class="project-tags">
+              <span class="project-tag">HTML/CSS/JS</span>
+              <span class="project-tag">Landing Page</span>
+              <span class="project-tag">Apple HIG</span>
+            </div>
+            <a href="#" class="project-link">
+              了解项目详情
+              <span class="project-link-arrow">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 技术能力展示 -->
+  <section class="section skills" id="skills">
+    <div class="section-container">
+      <div class="section-header">
+        <p class="section-eyebrow">专业能力</p>
+        <h2 class="section-title">全栈技术能力</h2>
+        <p class="section-subtitle">从前端到AI，从设计到产品，构建完整的技术能力矩阵</p>
+      </div>
+      
+      <div class="skills-grid">
+        <!-- AI开发 -->
+        <div class="skill-card fade-in-up">
+          <div class="skill-icon">🤖</div>
+          <h3 class="skill-title">AI开发</h3>
+          <p class="skill-description">掌握AI Agent开发、Prompt设计、本地大模型部署，能够构建智能化的应用系统。</p>
+          <div class="skill-tags">
+            <span class="skill-tag">AI Agent</span>
+            <span class="skill-tag">MimoCode</span>
+            <span class="skill-tag">OpenCode</span>
+            <span class="skill-tag">Prompt设计</span>
+          </div>
+        </div>
+        
+        <!-- Web开发 -->
+        <div class="skill-card fade-in-up">
+          <div class="skill-icon">💻</div>
+          <h3 class="skill-title">Web开发</h3>
+          <p class="skill-description">精通前端技术栈，能够独立完成Landing Page设计与开发，构建高质量的Web应用。</p>
+          <div class="skill-tags">
+            <span class="skill-tag">HTML</span>
+            <span class="skill-tag">CSS</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">Landing Page</span>
+          </div>
+        </div>
+        
+        <!-- AI应用 -->
+        <div class="skill-card fade-in-up">
+          <div class="skill-icon">🧠</div>
+          <h3 class="skill-title">AI应用</h3>
+          <p class="skill-description">熟练使用各类AI工具和大模型，能够进行本地部署和API调用，提升开发效率。</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Ollama</span>
+            <span class="skill-tag">DeepSeek</span>
+            <span class="skill-tag">Qwen</span>
+            <span class="skill-tag">API调用</span>
+          </div>
+        </div>
+        
+        <!-- 设计 -->
+        <div class="skill-card fade-in-up">
+          <div class="skill-icon">🎨</div>
+          <h3 class="skill-title">设计</h3>
+          <p class="skill-description">具备UI/UX设计能力，能够进行产品视觉设计，打造美观易用的用户界面。</p>
+          <div class="skill-tags">
+            <span class="skill-tag">UI/UX</span>
+            <span class="skill-tag">产品视觉设计</span>
+            <span class="skill-tag">Apple HIG</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 个人信息 -->
+  <section class="section about" id="about">
+    <div class="section-container">
+      <div class="section-header">
+        <p class="section-eyebrow">关于我</p>
+        <h2 class="section-title">持续进化的创造者</h2>
+        <p class="section-subtitle">在技术与设计的交汇处，寻找创新的可能性</p>
+      </div>
+      
+      <div class="about-grid">
+        <div class="about-main">
+          <h3>用AI增强创造力</h3>
+          <p class="about-text">
+            我是一名专注于AI辅助开发的工程师，善于利用AI Agent进行代码生成、问题分析和方案设计。
+            同时具备内容运营经验，独立运营短视频内容累计播放量150W+，能够将技术能力与产品思维相结合。
+          </p>
+          <p class="about-text">
+            在开发实践中，我注重用户体验和视觉设计，擅长Apple风格的UI设计与实现。
+            通过AI辅助的方式，能够快速迭代、持续创新，为客户提供高质量的技术解决方案。
+          </p>
+          
+          <div class="about-highlights">
+            <div class="highlight-item">
+              <div class="highlight-number">150W+</div>
+              <div class="highlight-label">视频播放量</div>
+            </div>
+            <div class="highlight-item">
+              <div class="highlight-number">3+</div>
+              <div class="highlight-label">核心项目</div>
+            </div>
+            <div class="highlight-item">
+              <div class="highlight-number">4</div>
+              <div class="highlight-label">技术领域</div>
+            </div>
+            <div class="highlight-item">
+              <div class="highlight-number">100%</div>
+              <div class="highlight-label">AI驱动</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="about-sidebar">
+          <!-- 工作经历 -->
+          <div class="sidebar-section">
+            <h4 class="sidebar-title">工作经历</h4>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-date">销售专员</div>
+                <div class="timeline-title">浙江格子商务</div>
+                <div class="timeline-desc">客户沟通与需求跟进，协助推进客户转化</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-date">项目助理</div>
+                <div class="timeline-title">宁波铭点装饰</div>
+                <div class="timeline-desc">协助客户沟通，了解用户需求，项目跟进</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-date">服务顾问</div>
+                <div class="timeline-title">竞途网络</div>
+                <div class="timeline-desc">根据客户需求提供服务方案，任务执行与交付</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 教育经历 -->
+          <div class="sidebar-section">
+            <h4 class="sidebar-title">教育经历</h4>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-date">专科</div>
+                <div class="timeline-title">浙江纺织服装职业技术学院</div>
+                <div class="timeline-desc">环境艺术设计（软装方向）</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 作品链接 -->
+          <div class="sidebar-section">
+            <h4 class="sidebar-title">联系方式</h4>
+            <div class="links-list">
+              <a href="https://github.com/builan14031981-sketch" target="_blank" class="link-item">
+                <span class="link-icon">💼</span>
+                GitHub主页
+              </a>
+              <a href="mailto:3220389580@qq.com" class="link-item">
+                <span class="link-icon">📧</span>
+                3220389580@qq.com
+              </a>
+              <a href="tel:18757073254" class="link-item">
+                <span class="link-icon">📱</span>
+                187 5707 3254
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer" id="contact">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">严志辉</div>
+          <p class="footer-desc">AI辅助开发工程师，致力于用AI增强创造力，构建有价值的数字产品。</p>
+          <a href="mailto:3220389580@qq.com?subject=来自网站的联系" class="btn-primary" style="margin-top: 20px; display: inline-flex;">
+            发送邮件联系我
+            <span class="btn-icon">→</span>
+          </a>
+        </div>
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>作品</h4>
+            <ul>
+              <li><a href="#projects">Electron便签</a></li>
+              <li><a href="#projects">AI助手系统</a></li>
+              <li><a href="#projects">产品展示网站</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>能力</h4>
+            <ul>
+              <li><a href="#skills">AI开发</a></li>
+              <li><a href="#skills">Web开发</a></li>
+              <li><a href="#skills">UI设计</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>联系</h4>
+            <ul>
+              <li><a href="https://github.com/builan14031981-sketch" target="_blank">GitHub</a></li>
+              <li><a href="mailto:3220389580@qq.com">3220389580@qq.com</a></li>
+              <li><a href="tel:18757073254">187 5707 3254</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">© 2026 严志辉. 保留所有权利.</span>
+        <div class="footer-legal">
+          <a href="#">隐私政策</a>
+          <a href="#">使用条款</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- AI助手 -->
+  <div class="ai-assistant">
+    <div class="ai-chat-window" id="aiChatWindow">
+      <div class="ai-chat-header">
+        <span class="ai-chat-header-title">AI助手</span>
+        <button class="ai-chat-close" id="aiChatClose">×</button>
+      </div>
+      <div class="ai-chat-messages" id="aiChatMessages">
+        <div class="ai-message bot">你好！我是严志辉的AI助手，有什么可以帮你的吗？</div>
+      </div>
+      <div class="ai-quick-actions">
+        <button class="ai-quick-btn" data-message="介绍一下你的项目">查看项目</button>
+        <button class="ai-quick-btn" data-message="你擅长什么技术？">技术能力</button>
+        <button class="ai-quick-btn" data-message="如何联系你？">联系方式</button>
+      </div>
+      <div class="ai-chat-input-area">
+        <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="输入消息...">
+        <button class="ai-chat-send" id="aiChatSend" disabled>→</button>
+      </div>
+    </div>
+    <button class="ai-button" id="aiButton">
+      <span class="ai-button-icon">🤖</span>
+      <span class="ai-button-pulse"></span>
+    </button>
+  </div>
+
+  <script>
+    // ========== 页面加载动画 ==========
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.getElementById('pageLoader').classList.add('loaded');
+      }, 1500);
+    });
+
+    // ========== 滚动动画 ==========
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.section, .fade-in-up, .fade-in-left, .fade-in-right, .scale-in').forEach(function(el) {
+      observer.observe(el);
+    });
+
+    // ========== 导航栏滚动效果 ==========
+    let lastScroll = 0;
+    const navbar = document.querySelector('.navbar');
+
+    window.addEventListener('scroll', function() {
+      const currentScroll = window.pageYOffset;
+      
+      if (currentScroll > 100) {
+        navbar.style.background = 'rgba(255, 255, 255, 0.85)';
+      } else {
+        navbar.style.background = 'rgba(255, 255, 255, 0.72)';
+      }
+      
+      lastScroll = currentScroll;
+    });
+
+    // ========== 平滑滚动 ==========
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // ========== AI助手交互（接入小米API） ==========
+    const aiButton = document.getElementById('aiButton');
+    const aiChatWindow = document.getElementById('aiChatWindow');
+    const aiChatClose = document.getElementById('aiChatClose');
+    const aiChatInput = document.getElementById('aiChatInput');
+    const aiChatSend = document.getElementById('aiChatSend');
+    const aiChatMessages = document.getElementById('aiChatMessages');
+    const aiQuickBtns = document.querySelectorAll('.ai-quick-btn');
+
+    // API配置
+    const API_CONFIG = {
+      endpoint: 'https://token-plan-cn.xiaomimimo.com/v1/chat/completions',
+      token: 'tp-cwfqnx68f5htccn68acar6m9wv2rw1lfqfhf34kv66hwio7u',
+      model: 'mimo-v2.5-pro'
+    };
+
+    // 系统提示词
+    const SYSTEM_PROMPT = `你是严志辉的AI助手，严志辉是一名AI辅助开发工程师。
+
+关于严志辉的信息：
+- 专注于AI辅助开发，使用AI Agent构建数字产品
+- 三个核心项目：Electron智能便签工具、AI助手系统、Apple风格网站
+- 技术能力：AI开发(LLM API、Agent开发)、Web开发(HTML/CSS/JS)、UI设计、产品设计
+- 工作经历：2024至今 AI辅助开发工程师，2023-2024 前端开发工程师
+- 教育背景：计算机科学与技术本科
+
+你的职责：
+1. 回答关于严志辉的项目、技能、经历的问题
+2. 提供技术相关的咨询
+3. 保持友好、专业的语气
+4. 回答简洁明了，适合聊天窗口展示`;
+
+    // 对话历史
+    let conversationHistory = [
+      { role: 'system', content: SYSTEM_PROMPT }
+    ];
+
+    // 切换聊天窗口
+    aiButton.addEventListener('click', function() {
+      aiChatWindow.classList.toggle('open');
+    });
+
+    aiChatClose.addEventListener('click', function() {
+      aiChatWindow.classList.remove('open');
+    });
+
+    // 显示加载状态
+    function showLoading() {
+      const loadingDiv = document.createElement('div');
+      loadingDiv.className = 'ai-message bot loading';
+      loadingDiv.id = 'aiLoading';
+      loadingDiv.innerHTML = '<span class="loading-dots">思考中</span>';
+      aiChatMessages.appendChild(loadingDiv);
+      aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+    }
+
+    // 移除加载状态
+    function hideLoading() {
+      const loading = document.getElementById('aiLoading');
+      if (loading) loading.remove();
+    }
+
+    // 调用API
+    async function callAI(userMessage) {
+      conversationHistory.push({ role: 'user', content: userMessage });
+
+      try {
+        const response = await fetch(API_CONFIG.endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${API_CONFIG.token}`
+          },
+          body: JSON.stringify({
+            model: API_CONFIG.model,
+            messages: conversationHistory,
+            temperature: 0.7,
+            max_tokens: 500
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`API请求失败: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const aiReply = data.choices[0].message.content;
+        
+        // 添加到对话历史
+        conversationHistory.push({ role: 'assistant', content: aiReply });
+        
+        // 限制历史长度（保留系统提示+最近10轮对话）
+        if (conversationHistory.length > 21) {
+          conversationHistory = [
+            conversationHistory[0],
+            ...conversationHistory.slice(-20)
+          ];
+        }
+
+        return aiReply;
+      } catch (error) {
+        console.error('AI API错误:', error);
+        return '抱歉，AI服务暂时不可用。请稍后再试或通过页脚联系方式直接联系严志辉。';
+      }
+    }
+
+    // 发送消息
+    async function sendMessage(message) {
+      if (!message.trim()) return;
+
+      // 添加用户消息
+      const userMessage = document.createElement('div');
+      userMessage.className = 'ai-message user';
+      userMessage.textContent = message;
+      aiChatMessages.appendChild(userMessage);
+
+      // 清空输入
+      aiChatInput.value = '';
+      aiChatSend.disabled = true;
+      aiChatInput.disabled = true;
+
+      // 显示加载
+      showLoading();
+
+      // 调用API
+      const aiReply = await callAI(message);
+
+      // 移除加载，显示回复
+      hideLoading();
+      const botMessage = document.createElement('div');
+      botMessage.className = 'ai-message bot';
+      botMessage.textContent = aiReply;
+      aiChatMessages.appendChild(botMessage);
+
+      // 恢复输入
+      aiChatInput.disabled = false;
+      aiChatInput.focus();
+
+      // 滚动到底部
+      aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+    }
+
+    // 发送按钮点击
+    aiChatSend.addEventListener('click', function() {
+      sendMessage(aiChatInput.value);
+    });
+
+    // 回车发送
+    aiChatInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage(aiChatInput.value);
+      }
+    });
+
+    // 输入监听
+    aiChatInput.addEventListener('input', function() {
+      aiChatSend.disabled = !this.value.trim();
+    });
+
+    // 快速按钮
+    aiQuickBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        sendMessage(this.dataset.message);
+      });
+    });
+
+    // ========== 项目卡片悬停效果 ==========
+    document.querySelectorAll('.project-visual').forEach(function(visual) {
+      const originalBg = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
+      
+      visual.addEventListener('mousemove', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        this.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(30, 50, 80, 0.4) 0%, transparent 60%), ${originalBg}`;
+      });
+      
+      visual.addEventListener('mouseleave', function() {
+        this.style.background = originalBg;
+      });
+    });
+  </script>
+
+</body>
+</html>
