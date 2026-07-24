@@ -2001,12 +2001,13 @@
       if (loading) loading.remove();
     }
 
-    // 调用API - 支持联网搜索
+    // 调用API
     async function callAI(userMessage) {
       conversationHistory.push({ role: 'user', content: userMessage });
 
       try {
-        const response = await fetch(API_CONFIG.endpoint, {
+        // 创建fetch请求
+        const fetchPromise = fetch(API_CONFIG.endpoint, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -2016,29 +2017,16 @@
             model: API_CONFIG.model,
             messages: conversationHistory,
             temperature: 0.7,
-            max_tokens: 800,
-            tools: [
-              {
-                type: "function",
-                function: {
-                  name: "web_search",
-                  description: "搜索互联网获取最新信息",
-                  parameters: {
-                    type: "object",
-                    properties: {
-                      query: {
-                        type: "string",
-                        description: "搜索关键词"
-                      }
-                    },
-                    required: ["query"]
-                  }
-                }
-              }
-            ],
-            tool_choice: "auto"
+            max_tokens: 800
           })
         });
+
+        // 15秒超时
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('请求超时')), 15000)
+        );
+
+        const response = await Promise.race([fetchPromise, timeoutPromise]);
 
         if (!response.ok) {
           throw new Error(`API请求失败: ${response.status}`);
@@ -2050,7 +2038,7 @@
         // 添加到对话历史
         conversationHistory.push({ role: 'assistant', content: aiReply });
         
-        // 限制历史长度（保留系统提示+最近10轮对话）
+        // 限制历史长度
         if (conversationHistory.length > 21) {
           conversationHistory = [
             conversationHistory[0],
@@ -2061,6 +2049,9 @@
         return aiReply;
       } catch (error) {
         console.error('AI API错误:', error);
+        if (error.message === '请求超时') {
+          return '⏱️ 回复超时，请稍后再试或直接联系严志辉：187 5707 3254';
+        }
         return '抱歉，AI服务暂时不可用。请稍后再试或通过页脚联系方式直接联系严志辉。';
       }
     }
