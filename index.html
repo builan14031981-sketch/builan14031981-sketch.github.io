@@ -1306,6 +1306,146 @@
       }
     }
 
+    /* 手机端适配 - 480px以下 */
+    @media (max-width: 480px) {
+      .hero {
+        padding-top: 80px;
+        padding-bottom: 60px;
+      }
+
+      .hero-title {
+        font-size: 36px;
+        letter-spacing: -1.5px;
+      }
+
+      .hero-subtitle {
+        font-size: 20px;
+      }
+
+      .hero-description {
+        font-size: 16px;
+        padding: 0 16px;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+        gap: 12px;
+        padding: 0 16px;
+      }
+
+      .btn-primary, .btn-secondary {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .section {
+        padding: 60px 0;
+      }
+
+      .section-title {
+        font-size: 28px;
+      }
+
+      .section-container {
+        padding: 0 16px;
+      }
+
+      .project-item {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .project-visual {
+        aspect-ratio: 16/10;
+      }
+
+      .project-title {
+        font-size: 24px;
+      }
+
+      .project-description {
+        font-size: 15px;
+      }
+
+      .skill-card {
+        padding: 20px;
+      }
+
+      .skill-title {
+        font-size: 20px;
+      }
+
+      .about-grid {
+        gap: 24px;
+      }
+
+      .about-text {
+        font-size: 15px;
+      }
+
+      .highlight-number {
+        font-size: 24px;
+      }
+
+      .nav-container {
+        padding: 0 16px;
+      }
+
+      .nav-logo {
+        font-size: 18px;
+      }
+
+      .footer-container {
+        padding: 0 16px;
+      }
+
+      .footer-desc {
+        font-size: 13px;
+      }
+
+      .ai-button {
+        width: 48px;
+        height: 48px;
+        bottom: 16px;
+        right: 16px;
+      }
+
+      .ai-button-icon {
+        font-size: 22px;
+      }
+
+      .ai-chat-window {
+        width: calc(100vw - 16px);
+        right: -8px;
+        bottom: 64px;
+        border-radius: 16px;
+      }
+
+      .ai-chat-messages {
+        height: 250px;
+      }
+
+      .sidebar-section {
+        padding: 20px;
+      }
+    }
+
+    /* 触摸设备优化 */
+    @media (hover: none) {
+      .project-visual:hover {
+        transform: none;
+      }
+
+      .skill-card:hover {
+        transform: none;
+        box-shadow: none;
+      }
+
+      .product-card:hover {
+        transform: none;
+      }
+    }
+
     /* ========== 滚动动画 ========== */
     .fade-in-up {
       opacity: 0;
