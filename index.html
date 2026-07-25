@@ -46,6 +46,18 @@
       --transition-slow: 0.5s cubic-bezier(0.28, 0.11, 0.32, 1);
     }
 
+    /* 深色模式变量 */
+    [data-theme="dark"] {
+      --text-primary: #f5f5f7;
+      --text-secondary: #a1a1a6;
+      --text-tertiary: #86868b;
+      --bg-primary: #000000;
+      --bg-secondary: #1d1d1f;
+      --bg-tertiary: #2d2d2f;
+      --border-color: #38383a;
+      --border-light: rgba(255, 255, 255, 0.08);
+    }
+
     html {
       scroll-behavior: smooth;
       font-size: 16px;
@@ -1446,6 +1458,236 @@
       }
     }
 
+    /* ========== 深色模式切换按钮 ========== */
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      padding: 4px;
+      opacity: 0.8;
+      transition: opacity var(--transition-fast);
+    }
+    .theme-toggle:hover {
+      opacity: 1;
+    }
+
+    /* ========== 深色模式样式覆盖 ========== */
+    [data-theme="dark"] .navbar {
+      background: rgba(0, 0, 0, 0.72);
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+    [data-theme="dark"] .hero::before {
+      background: radial-gradient(circle at 30% 50%, rgba(0, 113, 227, 0.06) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 50%, rgba(88, 86, 214, 0.06) 0%, transparent 50%);
+    }
+    [data-theme="dark"] .skill-card {
+      background: rgba(29, 29, 31, 0.8);
+    }
+    [data-theme="dark"] .highlight-item,
+    [data-theme="dark"] .sidebar-section {
+      background: var(--bg-secondary);
+    }
+    [data-theme="dark"] .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    [data-theme="dark"] .project-visual {
+      background: linear-gradient(135deg, #2d2d2f 0%, #1d1d1f 100%) !important;
+    }
+
+    /* ========== 博客模块 ========== */
+    .blog {
+      background: var(--bg-primary);
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .blog-card {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all var(--transition-normal);
+      cursor: pointer;
+      border: 1px solid var(--border-light);
+    }
+    .blog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
+    }
+    .blog-card-image {
+      width: 100%;
+      height: 180px;
+      background: linear-gradient(135deg, var(--accent-blue) 0%, #5856d6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+    }
+    .blog-card-content {
+      padding: 24px;
+    }
+    .blog-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .blog-card-date {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .blog-card-tag {
+      font-size: 12px;
+      color: var(--accent-blue);
+      background: rgba(0, 113, 227, 0.1);
+      padding: 2px 8px;
+      border-radius: 980px;
+    }
+    .blog-card-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+    .blog-card-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ========== 项目详情弹窗 ========== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--transition-normal);
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal {
+      background: var(--bg-primary);
+      border-radius: var(--radius-xl);
+      width: 90%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.95) translateY(20px);
+      transition: transform var(--transition-normal);
+    }
+    .modal-overlay.active .modal {
+      transform: scale(1) translateY(0);
+    }
+    .modal-header {
+      position: relative;
+      padding: 32px 32px 0;
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition-fast);
+    }
+    .modal-close:hover {
+      background: var(--border-color);
+    }
+    .modal-image {
+      width: 100%;
+      height: 300px;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      margin-bottom: 24px;
+    }
+    .modal-body {
+      padding: 0 32px 32px;
+    }
+    .modal-category {
+      font-size: 14px;
+      color: var(--accent-blue);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .modal-title {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+    .modal-desc {
+      font-size: 17px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .modal-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .modal-tag {
+      padding: 8px 16px;
+      background: rgba(0, 113, 227, 0.1);
+      color: var(--accent-blue);
+      border-radius: 980px;
+      font-size: 14px;
+    }
+    .modal-section-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+    .modal-features {
+      list-style: none;
+      margin-bottom: 24px;
+    }
+    .modal-features li {
+      padding: 8px 0;
+      padding-left: 24px;
+      position: relative;
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+    .modal-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--accent-blue);
+      font-weight: 600;
+    }
+
     /* ========== 滚动动画 ========== */
     .fade-in-up {
       opacity: 0;
@@ -1509,8 +1751,10 @@
       <ul class="nav-links">
         <li><a href="#projects">项目</a></li>
         <li><a href="#skills">能力</a></li>
+        <li><a href="#blog">博客</a></li>
         <li><a href="#about">关于</a></li>
         <li><a href="#contact" class="nav-cta">联系我</a></li>
+        <li><button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button></li>
       </ul>
     </div>
   </nav>
@@ -1568,7 +1812,7 @@
               <span class="project-tag">桌面应用</span>
               <span class="project-tag">AI Agent</span>
             </div>
-            <a href="#" class="project-link">
+            <a href="javascript:void(0)" class="project-link" onclick="openProjectModal(0)">
               了解项目详情
               <span class="project-link-arrow">→</span>
             </a>
@@ -1593,7 +1837,7 @@
               <span class="project-tag">Qwen</span>
               <span class="project-tag">AI Agent</span>
             </div>
-            <a href="#" class="project-link">
+            <a href="javascript:void(0)" class="project-link" onclick="openProjectModal(1)">
               了解项目详情
               <span class="project-link-arrow">→</span>
             </a>
@@ -1617,7 +1861,7 @@
               <span class="project-tag">Landing Page</span>
               <span class="project-tag">Apple HIG</span>
             </div>
-            <a href="#" class="project-link">
+            <a href="javascript:void(0)" class="project-link" onclick="openProjectModal(2)">
               了解项目详情
               <span class="project-link-arrow">→</span>
             </a>
@@ -1690,6 +1934,88 @@
       </div>
     </div>
   </section>
+
+  <!-- 博客模块 -->
+  <section class="section blog" id="blog">
+    <div class="section-container">
+      <div class="section-header">
+        <p class="section-eyebrow">技术分享</p>
+        <h2 class="section-title">博客文章</h2>
+        <p class="section-subtitle">记录技术思考与实践经验</p>
+      </div>
+      
+      <div class="blog-grid">
+        <div class="blog-card fade-in-up" onclick="openBlogModal(0)">
+          <div class="blog-card-image">🤖</div>
+          <div class="blog-card-content">
+            <div class="blog-card-meta">
+              <span class="blog-card-date">2026-07-20</span>
+              <span class="blog-card-tag">AI开发</span>
+            </div>
+            <h3 class="blog-card-title">如何用AI Agent提升开发效率</h3>
+            <p class="blog-card-desc">分享使用AI Agent辅助开发的实践经验，从Prompt设计到工作流优化。</p>
+          </div>
+        </div>
+        
+        <div class="blog-card fade-in-up" onclick="openBlogModal(1)">
+          <div class="blog-card-image">💻</div>
+          <div class="blog-card-content">
+            <div class="blog-card-meta">
+              <span class="blog-card-date">2026-07-15</span>
+              <span class="blog-card-tag">Electron</span>
+            </div>
+            <h3 class="blog-card-title">Electron桌面应用开发入门指南</h3>
+            <p class="blog-card-desc">从零开始构建一个完整的Electron桌面应用，涵盖主进程、渲染进程通信。</p>
+          </div>
+        </div>
+        
+        <div class="blog-card fade-in-up" onclick="openBlogModal(2)">
+          <div class="blog-card-image">🎨</div>
+          <div class="blog-card-content">
+            <div class="blog-card-meta">
+              <span class="blog-card-date">2026-07-10</span>
+              <span class="blog-card-tag">UI设计</span>
+            </div>
+            <h3 class="blog-card-title">Apple设计语言在Web中的应用</h3>
+            <p class="blog-card-desc">如何将Apple的视觉设计语言应用到Web开发中，打造高级感的用户界面。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 博客详情弹窗 -->
+  <div class="modal-overlay" id="blogModal">
+    <div class="modal">
+      <div class="modal-header">
+        <button class="modal-close" onclick="closeBlogModal()">×</button>
+        <div class="modal-image" id="blogModalImage">📝</div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-category" id="blogModalCategory">AI开发</div>
+        <h2 class="modal-title" id="blogModalTitle">文章标题</h2>
+        <p class="modal-desc" id="blogModalContent">文章内容...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 项目详情弹窗 -->
+  <div class="modal-overlay" id="projectModal">
+    <div class="modal">
+      <div class="modal-header">
+        <button class="modal-close" onclick="closeProjectModal()">×</button>
+        <div class="modal-image" id="projectModalImage">📝</div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-category" id="projectModalCategory">项目类别</div>
+        <h2 class="modal-title" id="projectModalTitle">项目标题</h2>
+        <p class="modal-desc" id="projectModalDesc">项目描述...</p>
+        <div class="modal-tags" id="projectModalTags"></div>
+        <h3 class="modal-section-title">核心功能</h3>
+        <ul class="modal-features" id="projectModalFeatures"></ul>
+      </div>
+    </div>
+  </div>
 
   <!-- 个人信息 -->
   <section class="section about" id="about">
@@ -1868,8 +2194,166 @@
   </div>
 
   <script>
+    // ========== 深色模式切换 ==========
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      if (newTheme === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+        document.getElementById('themeToggle').textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        html.removeAttribute('data-theme');
+        document.getElementById('themeToggle').textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    // 初始化主题
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('themeToggle').textContent = '☀️';
+      }
+    }
+
+    // ========== 博客弹窗数据 ==========
+    const blogPosts = [
+      {
+        image: '🤖',
+        category: 'AI开发',
+        title: '如何用AI Agent提升开发效率',
+        content: '在当今快速发展的技术环境中，AI Agent已经成为提升开发效率的重要工具。通过合理设计Prompt和工作流，我们可以让AI协助完成代码生成、问题分析、方案设计等任务。\n\n首先，Prompt设计是关键。好的Prompt应该包含清晰的上下文、明确的任务描述和期望的输出格式。其次，建立标准化的工作流程，让AI能够持续地为项目贡献价值。\n\n在实践中，我发现AI Agent最擅长的是：1）快速生成代码模板；2）分析和解释复杂代码；3）提供多种解决方案供选择；4）自动化重复性任务。'
+      },
+      {
+        image: '💻',
+        category: 'Electron',
+        title: 'Electron桌面应用开发入门指南',
+        content: 'Electron是一个使用JavaScript、HTML和CSS构建跨平台桌面应用的框架。它结合了Chromium和Node.js，让Web开发者能够轻松创建原生应用。\n\n在开发桌面便签应用的过程中，我总结了几个关键点：1）主进程与渲染进程的通信机制；2）窗口管理和系统托盘的实现；3）数据持久化方案；4）打包和分发策略。\n\n对于想要入门Electron开发的开发者，建议从一个简单的项目开始，逐步添加功能。重点掌握IPC通信、窗口管理和数据存储这三个核心概念。'
+      },
+      {
+        image: '🎨',
+        category: 'UI设计',
+        title: 'Apple设计语言在Web中的应用',
+        content: 'Apple的设计语言以其简洁、优雅和一致性著称。将这些设计原则应用到Web开发中，可以显著提升用户界面的品质感。\n\n关键设计元素包括：1）毛玻璃效果（backdrop-filter）；2）精致的圆角和阴影；3）流畅的动画过渡；4）统一的间距和排版系统。\n\n在实现过程中，CSS的backdrop-filter属性是实现毛玻璃效果的关键，而CSS变量则帮助我们建立统一的设计系统。动画方面，使用cubic-bezier曲线可以创造出更自然的过渡效果。'
+      }
+    ];
+
+    // ========== 项目详情弹窗数据 ==========
+    const projectDetails = [
+      {
+        image: '📝',
+        category: '桌面应用开发',
+        title: 'Electron智能便签工具',
+        desc: '一款轻量级Electron桌面便签应用，支持多书签、主题切换、设置面板、模式预设等功能。这是我独立开发的第二个完善的小软件，旨在提供一个简单好用的工具来承载用户的奇思妙想。',
+        tags: ['Electron', '桌面应用', 'AI Agent', 'Node.js'],
+        features: [
+          '多书签管理 — 创建、重命名、删除书签页',
+          '便签CRUD — 新建、编辑、删除想法',
+          '拖拽排序 — mousedown阈值版拖拽，支持卡片重排',
+          '系统托盘 — 最小化到托盘，单击恢复',
+          '系统级顶层置顶 — screen-saver级别，不被全屏程序覆盖',
+          'Mini Window — 缩小为小组件（独立BrowserWindow）',
+          '7个主题 — 暖沙、雾蓝、森林绿、樱花粉、深夜黑、石墨灰、薄荷绿',
+          '任务状态系统 — 待完成/已完成/暂不可做',
+          '开机自启动设置'
+        ]
+      },
+      {
+        image: '🤖',
+        category: 'AI应用开发',
+        title: '本地AI助手系统',
+        desc: '搭建本地大语言模型运行环境，探索AI Agent自动化应用。通过集成Ollama、DeepSeek、Qwen等模型，实现智能化工作流，让AI真正成为开发者的得力助手。',
+        tags: ['Ollama', 'DeepSeek', 'Qwen', 'AI Agent'],
+        features: [
+          '本地模型部署 — 使用Ollama运行开源大模型',
+          '多模型支持 — 集成DeepSeek、Qwen等主流模型',
+          'Agent工作流 — 自动化任务处理流程',
+          'Prompt优化 — 针对不同场景设计专用Prompt',
+          '上下文管理 — 维护对话历史，提升交互体验',
+          'API集成 — 支持调用云端API扩展能力'
+        ]
+      },
+      {
+        image: '🎨',
+        category: 'Web前端开发',
+        title: '产品展示网站设计与开发',
+        desc: '参考Apple视觉语言完成产品展示网站设计，负责页面结构和交互体验。实现毛玻璃效果、流畅动效和响应式布局，展现精细的前端开发能力和UI设计审美。',
+        tags: ['HTML/CSS/JS', 'Landing Page', 'Apple HIG', '响应式'],
+        features: [
+          'Apple风格设计 — 毛玻璃效果、精致圆角、流畅动画',
+          '深色模式 — 支持亮色/暗色主题切换',
+          '响应式布局 — 完美适配桌面、平板、手机',
+          'AI助手集成 — 接入小米MiMo API，提供智能问答',
+          '滚动动画 — 使用IntersectionObserver实现优雅的入场效果',
+          '项目详情弹窗 — 点击查看项目详细信息'
+        ]
+      }
+    ];
+
+    // ========== 博客弹窗控制 ==========
+    function openBlogModal(index) {
+      const post = blogPosts[index];
+      document.getElementById('blogModalImage').textContent = post.image;
+      document.getElementById('blogModalCategory').textContent = post.category;
+      document.getElementById('blogModalTitle').textContent = post.title;
+      document.getElementById('blogModalContent').textContent = post.content;
+      document.getElementById('blogModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeBlogModal() {
+      document.getElementById('blogModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // ========== 项目详情弹窗控制 ==========
+    function openProjectModal(index) {
+      const project = projectDetails[index];
+      document.getElementById('projectModalImage').textContent = project.image;
+      document.getElementById('projectModalCategory').textContent = project.category;
+      document.getElementById('projectModalTitle').textContent = project.title;
+      document.getElementById('projectModalDesc').textContent = project.desc;
+      
+      // 渲染标签
+      const tagsContainer = document.getElementById('projectModalTags');
+      tagsContainer.innerHTML = project.tags.map(tag => `<span class="modal-tag">${tag}</span>`).join('');
+      
+      // 渲染功能列表
+      const featuresContainer = document.getElementById('projectModalFeatures');
+      featuresContainer.innerHTML = project.features.map(feature => `<li>${feature}</li>`).join('');
+      
+      document.getElementById('projectModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProjectModal() {
+      document.getElementById('projectModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // 点击遮罩层关闭弹窗
+    document.getElementById('blogModal').addEventListener('click', function(e) {
+      if (e.target === this) closeBlogModal();
+    });
+    document.getElementById('projectModal').addEventListener('click', function(e) {
+      if (e.target === this) closeProjectModal();
+    });
+
+    // ESC键关闭弹窗
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeBlogModal();
+        closeProjectModal();
+      }
+    });
+
     // ========== 页面加载动画 ==========
     window.addEventListener('load', function() {
+      initTheme(); // 初始化主题
       setTimeout(function() {
         document.getElementById('pageLoader').classList.add('loaded');
       }, 1500);
