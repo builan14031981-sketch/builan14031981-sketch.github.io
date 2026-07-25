@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "从向AI提问，到与AI协作开发",
+    "description": "我的AI Agent探索之路：从搜索工具到开发伙伴的转变，探索如何更好地利用AI创造产品。",
+    "category": "AI实践",
+    "date": "2026年7月",
+    "cover": "🤖",
+    "url": "../blog-ai-collaboration.html",
+    "featured": true
+  },
+  {
+    "id": 2,
+    "title": "从一台个人电脑到企业级AI助手",
+    "description": "本地大模型部署实践：Ollama + Qwen3 企业私有化AI系统建设全记录。",
+    "category": "AI应用",
+    "date": "2026年7月",
+    "cover": "🏢",
+    "url": "../blog-ai-enterprise.html",
+    "featured": true
+  },
+  {
+    "id": 3,
+    "title": "从喜欢苹果，到理解苹果",
+    "description": "我的设计美学探索：从被"好看"吸引，到理解克制与留白的设计哲学。",
+    "category": "设计探索",
+    "date": "2026年7月",
+    "cover": "🎨",
+    "url": "../blog-design-aesthetics.html",
+    "featured": true
+  }
+]
