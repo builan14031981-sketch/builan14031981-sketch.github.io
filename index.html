@@ -3035,27 +3035,27 @@
 
     // ========== 项目卡片悬停效果 ==========
     document.querySelectorAll('.project-visual').forEach(function(visual) {
-      // 根据主题选择原始背景
-      const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
-      const originalBg = isDarkMode 
-        ? 'linear-gradient(135deg, #1c1c1e 0%, #29263d 100%)'
-        : 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
-      
       visual.addEventListener('mousemove', function(e) {
         const rect = this.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         
-        // 根据主题选择光晕颜色
+        // 获取当前主题的展示区渐变
+        const computedStyle = getComputedStyle(document.documentElement);
+        const displayGradient = computedStyle.getPropertyValue('--display-gradient').trim();
+        
+        // 根据深色模式选择光晕颜色
+        const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
         const glowColor = isDarkMode 
           ? 'rgba(41, 38, 61, 0.6)'
           : 'rgba(30, 50, 80, 0.4)';
         
-        this.style.background = `radial-gradient(circle at ${x}px ${y}px, ${glowColor} 0%, transparent 60%), ${originalBg}`;
+        this.style.background = `radial-gradient(circle at ${x}px ${y}px, ${glowColor} 0%, transparent 60%), ${displayGradient}`;
       });
       
       visual.addEventListener('mouseleave', function() {
-        this.style.background = originalBg;
+        // 恢复为CSS变量控制的背景
+        this.style.background = '';
       });
     });
   </script>
