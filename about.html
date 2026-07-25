@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>关于严志辉 - 我的探索之路</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* 主色调 */
+      --accent-blue: #0071e3;
+      --accent-blue-hover: #0077ed;
+      
+      /* 文字颜色 */
+      --text-primary: #1d1d1f;
+      --text-secondary: #86868b;
+      --text-tertiary: #6e6e73;
+      
+      /* 背景层次 */
+      --bg-primary: #ffffff;
+      --bg-secondary: #f5f5f7;
+      --bg-tertiary: #fbfbfd;
+      
+      /* 边框颜色 */
+      --border-color: #d2d2d7;
+      --border-light: rgba(0, 0, 0, 0.08);
+      
+      /* 玻璃效果 */
+      --glass-bg: rgba(255, 255, 255, 0.72);
+      --glass-border: rgba(0, 0, 0, 0.08);
+      --glass-blur: 20px;
+      
+      /* 圆角 */
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 28px;
+      
+      /* 阴影 */
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    /* 深色模式 */
+    [data-theme="dark"] {
+      --accent-blue: #0a84ff;
+      --accent-blue-hover: #409cff;
+      
+      --text-primary: #f5f5f7;
+      --text-secondary: #a1a1a6;
+      --text-tertiary: #86868b;
+      
+      --bg-primary: #1c1c1e;
+      --bg-secondary: #2c2c2e;
+      --bg-tertiary: #3a3a3c;
+      
+      --border-color: #38383a;
+      --border-light: rgba(255, 255, 255, 0.06);
+      
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ========== 导航栏 ========== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      background: var(--glass-bg);
+      backdrop-filter: saturate(180%) blur(var(--glass-blur));
+      -webkit-backdrop-filter: saturate(180%) blur(var(--glass-blur));
+      border-bottom: 1px solid var(--glass-border);
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-back {
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-back:hover {
+      opacity: 0.8;
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border-color);
+    }
+
+    .nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      padding: 4px;
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      opacity: 1;
+    }
+
+    /* ========== Hero区域 ========== */
+    .hero {
+      padding: 180px 40px 120px;
+      text-align: center;
+      background: var(--bg-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 50%, rgba(41, 38, 61, 0.03) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 50%, rgba(41, 38, 61, 0.02) 0%, transparent 50%);
+    }
+
+    .hero-container {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--bg-secondary);
+      border-radius: 980px;
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 700;
+      letter-spacing: -3px;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: var(--text-primary);
+    }
+
+    .hero-subtitle {
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      letter-spacing: -0.5px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ========== 章节区域 ========== */
+    .chapter {
+      padding: 120px 40px;
+      background: var(--bg-primary);
+    }
+
+    .chapter-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .chapter-header {
+      margin-bottom: 48px;
+    }
+
+    .chapter-number {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .chapter-title {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.2;
+      color: var(--text-primary);
+    }
+
+    .chapter-content p {
+      font-size: 19px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .chapter-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .chapter-content strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .chapter-content blockquote {
+      border-left: 4px solid var(--accent-blue);
+      padding: 24px 32px;
+      margin: 32px 0;
+      background: var(--bg-secondary);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    }
+
+    .chapter-content blockquote p {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text-primary);
+      font-style: italic;
+      margin-bottom: 0;
+    }
+
+    /* ========== Bento能力展示 ========== */
+    .bento {
+      padding: 120px 40px;
+      background: var(--bg-secondary);
+    }
+
+    .bento-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .bento-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .bento-eyebrow {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .bento-title {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      color: var(--text-primary);
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .bento-card {
+      background: var(--bg-primary);
+      border-radius: var(--radius-xl);
+      padding: 48px 36px;
+      border: 1px solid var(--border-light);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .bento-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .bento-card-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--radius-lg);
+      background: var(--bg-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      margin-bottom: 28px;
+    }
+
+    .bento-card-title {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .bento-card-desc {
+      font-size: 17px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .bento-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .bento-tag {
+      padding: 6px 14px;
+      background: var(--bg-secondary);
+      border-radius: 980px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ========== 未来方向 ========== */
+    .future {
+      padding: 120px 40px;
+      background: var(--bg-primary);
+    }
+
+    .future-container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .future-eyebrow {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .future-title {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.2;
+      margin-bottom: 32px;
+      color: var(--text-primary);
+    }
+
+    .future-content p {
+      font-size: 19px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .future-content strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .future-quote {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -1px;
+      margin-top: 48px;
+      line-height: 1.3;
+    }
+
+    /* ========== 联系入口 ========== */
+    .contact {
+      padding: 120px 40px;
+      background: var(--bg-secondary);
+    }
+
+    .contact-container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .contact-eyebrow {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .contact-title {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      margin-bottom: 24px;
+      color: var(--text-primary);
+    }
+
+    .contact-desc {
+      font-size: 19px;
+      color: var(--text-secondary);
+      margin-bottom: 48px;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      padding: 16px 32px;
+      border-radius: 980px;
+      font-size: 17px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .contact-link-primary {
+      background: var(--accent-blue);
+      color: white;
+    }
+
+    .contact-link-primary:hover {
+      background: var(--accent-blue-hover);
+      transform: translateY(-2px);
+    }
+
+    .contact-link-secondary {
+      background: transparent;
+      color: var(--accent-blue);
+      border: 1px solid var(--accent-blue);
+    }
+
+    .contact-link-secondary:hover {
+      background: rgba(0, 113, 227, 0.05);
+      transform: translateY(-2px);
+    }
+
+    /* ========== 页脚 ========== */
+    .footer {
+      background: var(--bg-primary);
+      padding: 32px 0;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      text-align: center;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .footer-link {
+      color: var(--accent-blue);
+      text-decoration: none;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    /* ========== 响应式 ========== */
+    @media (max-width: 1024px) {
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 140px 20px 80px;
+      }
+
+      .hero-title {
+        font-size: 44px;
+        letter-spacing: -2px;
+      }
+
+      .hero-subtitle {
+        font-size: 20px;
+      }
+
+      .chapter {
+        padding: 80px 20px;
+      }
+
+      .chapter-title {
+        font-size: 32px;
+      }
+
+      .chapter-content p {
+        font-size: 17px;
+      }
+
+      .bento {
+        padding: 80px 20px;
+      }
+
+      .bento-card {
+        padding: 32px 24px;
+      }
+
+      .bento-card-title {
+        font-size: 24px;
+      }
+
+      .future {
+        padding: 80px 20px;
+      }
+
+      .future-title {
+        font-size: 32px;
+      }
+
+      .future-quote {
+        font-size: 24px;
+      }
+
+      .contact {
+        padding: 80px 20px;
+      }
+
+      .contact-title {
+        font-size: 32px;
+      }
+
+      .contact-links {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .contact-link {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .nav-container {
+        padding: 0 20px;
+      }
+
+      .nav-divider {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <a href="index.html" class="nav-back">← 返回首页</a>
+        <div class="nav-divider"></div>
+        <span class="nav-title">关于我</span>
+      </div>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
+    </div>
+  </nav>
+
+  <!-- Hero区域 -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-badge">个人介绍</div>
+      <h1 class="hero-title">你好，我是严志辉</h1>
+      <p class="hero-subtitle">一个从设计出发，探索AI与数字创造的开发者。</p>
+    </div>
+  </section>
+
+  <!-- 第一章 -->
+  <section class="chapter">
+    <div class="chapter-container">
+      <div class="chapter-header">
+        <div class="chapter-number">第一章</div>
+        <h2 class="chapter-title">从设计出发，寻找创造的可能</h2>
+      </div>
+      <div class="chapter-content">
+        <p>我的故事开始于设计。</p>
+        <p>大学期间，我学习的是环境艺术设计，接触过软装设计、空间规划、视觉表达等内容。</p>
+        <p>设计带给我的不仅是软件操作能力，更重要的是一种思考方式：<strong>如何理解人的需求，如何创造更好的体验。</strong></p>
+        <p>在学习过程中，我逐渐培养了自己对于视觉、美感以及用户体验的关注。我习惯观察一个作品为什么能够吸引人，也喜欢思考：一个想法，应该如何通过设计变得更加完整。</p>
+        <p>但毕业之后，我开始意识到，仅仅依靠传统设计工具，很多想法依然会受到能力和资源的限制。很多时候，一个创意产生之后，还需要等待更多条件才能真正落地。</p>
+        <p>直到人工智能的发展，我看到了新的可能。</p>
+        <blockquote>
+          <p>AI让我意识到：创造不一定只能依靠传统路径。一个拥有设计思维的人，也可以通过学习技术工具，让自己的想法拥有更多实现的机会。</p>
+        </blockquote>
+        <p>于是，我开始探索人工智能。</p>
+        <p>这条路并没有固定答案。很多技术、工具和方法，都是我在不断学习、实践和试错中逐渐摸索出来的。而这个过程，也成为了我成长的重要部分。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第二章 -->
+  <section class="chapter" style="background: var(--bg-secondary);">
+    <div class="chapter-container">
+      <div class="chapter-header">
+        <div class="chapter-number">第二章</div>
+        <h2 class="chapter-title">利用AI，让想法真正落地</h2>
+      </div>
+      <div class="chapter-content">
+        <p>最初接触AI时，我只是把它当作一个提高效率的工具。遇到问题时，我会向AI寻求帮助。</p>
+        <p>但随着深入使用，我逐渐发现：<strong>AI真正改变的，不只是工作效率，而是一个人的创造方式。</strong></p>
+        <p>它降低了从想法到现实之间的距离。</p>
+        <p>于是，我开始主动学习AI相关技术，从简单的AI工具使用，到大语言模型、本地模型部署、Agent工作流以及智能应用开发。</p>
+        <p>我开始尝试让AI参与自己的创造过程。</p>
+        <p>通过AI，我完成个人网站的设计与开发，探索数字产品的展示方式；我尝试开发属于自己的软件工具，将日常需求转化为真正运行的应用；我研究本地模型和智能助手，希望让AI成为个人工作流程中的一部分。</p>
+        <p>这些经历让我逐渐认识到：</p>
+        <blockquote>
+          <p>技术并不是设计的对立面。设计关注人与体验。技术负责实现可能。而AI，则成为连接两者的重要桥梁。</p>
+        </blockquote>
+        <p>过去，我只能构思一个产品。现在，我可以借助AI，让一个想法逐渐变成真实存在的作品。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第三章 -->
+  <section class="chapter">
+    <div class="chapter-container">
+      <div class="chapter-header">
+        <div class="chapter-number">第三章</div>
+        <h2 class="chapter-title">持续探索，成为不断进化的创造者</h2>
+      </div>
+      <div class="chapter-content">
+        <p>回顾自己的经历，我发现自己一直在寻找新的创造方式。</p>
+        <p>从设计，到技术，再到人工智能，这条道路并不是提前规划好的。更多时候，我是在面对未知时不断学习，在实践过程中寻找答案。</p>
+        <p>我相信，未来真正重要的能力，不只是掌握某一项固定技能，而是拥有持续学习、适应变化和解决问题的能力。</p>
+        <p>环境艺术设计培养了我对于视觉和体验的理解。AI让我拥有了突破限制、实现想法的新工具。而不断探索，让我能够持续成长。</p>
+        <p>未来，我希望继续探索设计、技术与人工智能之间的连接，用新的方式创造有价值的产品。</p>
+        <p>世界一直在变化。而我也会不断学习，不断突破。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bento能力展示 -->
+  <section class="bento">
+    <div class="bento-container">
+      <div class="bento-header">
+        <div class="bento-eyebrow">能力方向</div>
+        <h2 class="bento-title">三个方向，一个目标</h2>
+      </div>
+      <div class="bento-grid">
+        <div class="bento-card">
+          <div class="bento-card-icon">🎨</div>
+          <h3 class="bento-card-title">Design</h3>
+          <p class="bento-card-desc">环境艺术设计背景，培养了对视觉、美感和用户体验的敏感度。设计不仅是美学，更是理解需求、解决问题的思考方式。</p>
+          <div class="bento-card-tags">
+            <span class="bento-tag">UI/UX</span>
+            <span class="bento-tag">视觉设计</span>
+            <span class="bento-tag">Apple HIG</span>
+            <span class="bento-tag">产品设计</span>
+          </div>
+        </div>
+        <div class="bento-card">
+          <div class="bento-card-icon">🤖</div>
+          <h3 class="bento-card-title">AI</h3>
+          <p class="bento-card-desc">探索AI在创造过程中的应用，从工具使用到智能系统开发。AI不是替代创造者，而是增强创造者的能力。</p>
+          <div class="bento-card-tags">
+            <span class="bento-tag">AI Agent</span>
+            <span class="bento-tag">本地模型</span>
+            <span class="bento-tag">Prompt设计</span>
+            <span class="bento-tag">智能应用</span>
+          </div>
+        </div>
+        <div class="bento-card">
+          <div class="bento-card-icon">💻</div>
+          <h3 class="bento-card-title">Development</h3>
+          <p class="bento-card-desc">通过代码将想法变成现实。从桌面应用到Web网站，从个人工具到商业产品，开发是实现创造的桥梁。</p>
+          <div class="bento-card-tags">
+            <span class="bento-tag">Electron</span>
+            <span class="bento-tag">HTML/CSS/JS</span>
+            <span class="bento-tag">Node.js</span>
+            <span class="bento-tag">前端开发</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 未来方向 -->
+  <section class="future">
+    <div class="future-container">
+      <div class="future-eyebrow">未来方向</div>
+      <h2 class="future-title">无限进步，无限探索</h2>
+      <div class="future-content">
+        <p>设计、技术、人工智能，这三个领域正在深度融合。</p>
+        <p>未来的产品，不仅需要<strong>好看的设计</strong>，还需要<strong>强大的技术</strong>，更需要<strong>智能的体验</strong>。</p>
+        <p>我希望成为这三者之间的连接者，用设计思维理解需求，用技术能力实现可能，用AI智能增强体验。</p>
+      </div>
+      <div class="future-quote">
+        继续探索，继续创造。
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系入口 -->
+  <section class="contact">
+    <div class="contact-container">
+      <div class="contact-eyebrow">联系我</div>
+      <h2 class="contact-title">一起创造</h2>
+      <p class="contact-desc">如果你对我的项目感兴趣，或者想要合作，欢迎联系我。</p>
+      <div class="contact-links">
+        <a href="mailto:3220389580@qq.com" class="contact-link contact-link-primary">发送邮件</a>
+        <a href="https://github.com/builan14031981-sketch" target="_blank" class="contact-link contact-link-secondary">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <p class="footer-text">
+        © 2026 严志辉 · <a href="index.html" class="footer-link">返回首页</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // 主题切换
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      if (newTheme === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+        document.getElementById('themeToggle').textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        html.removeAttribute('data-theme');
+        document.getElementById('themeToggle').textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    // 初始化主题
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('themeToggle').textContent = '☀️';
+      }
+    }
+
+    // 初始化
+    window.addEventListener('load', initTheme);
+  </script>
+</body>
+</html>
