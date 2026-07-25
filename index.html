@@ -425,7 +425,7 @@
     }
 
     .hero-title-gradient {
-      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-blue) 50%, #5856d6 100%);
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-blue) 50%, var(--accent-blue) 100%);
       background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -530,13 +530,13 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+      box-shadow: var(--card-shadow);
     }
 
     .btn-primary:hover {
       background: var(--accent-blue-hover);
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 113, 227, 0.3);
+      box-shadow: var(--card-shadow-hover);
     }
 
     .btn-secondary {
@@ -752,7 +752,7 @@
 
     .skill-card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--card-shadow-hover);
     }
 
     .skill-card:hover::before {
@@ -763,7 +763,7 @@
       width: 56px;
       height: 56px;
       border-radius: var(--radius-md);
-      background: linear-gradient(135deg, var(--accent-blue) 0%, #5856d6 100%);
+      background: var(--accent-gradient);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1065,14 +1065,14 @@
     .ai-button {
       width: 60px;
       height: 60px;
-      background: linear-gradient(135deg, var(--accent-blue) 0%, #5856d6 100%);
+      background: var(--accent-gradient);
       border: none;
       border-radius: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 32px rgba(0, 113, 227, 0.3);
+      box-shadow: var(--card-shadow-hover);
       transition: all var(--transition-normal);
       position: relative;
       overflow: hidden;
@@ -1092,7 +1092,7 @@
 
     .ai-button:hover {
       transform: scale(1.1);
-      box-shadow: 0 12px 40px rgba(0, 113, 227, 0.4);
+      box-shadow: var(--card-shadow-hover);
     }
 
     .ai-button:hover::before {
@@ -1132,10 +1132,12 @@
       bottom: 80px;
       right: 0;
       width: 380px;
-      background: white;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
       border-radius: var(--radius-xl);
-      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.15);
-      border: 1px solid var(--border-light);
+      box-shadow: var(--card-shadow-hover);
+      border: 1px solid var(--glass-border);
       overflow: hidden;
       opacity: 0;
       visibility: hidden;
@@ -1151,7 +1153,7 @@
 
     .ai-chat-header {
       padding: 20px 24px;
-      background: linear-gradient(135deg, var(--accent-blue) 0%, #5856d6 100%);
+      background: var(--accent-gradient);
       color: white;
       display: flex;
       align-items: center;
@@ -1806,7 +1808,7 @@
     .modal-image {
       width: 100%;
       height: 300px;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      background: var(--display-gradient);
       border-radius: var(--radius-lg);
       display: flex;
       align-items: center;
@@ -2083,7 +2085,7 @@
         
         <!-- 项目2：AI助手系统 -->
         <div class="project-item reverse fade-in-up">
-          <div class="project-visual" style="background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);">
+          <div class="project-visual">
             <div class="project-visual-content">
               <span class="project-visual-icon">🤖</span>
               <div class="project-visual-title">AI助手</div>
@@ -2108,7 +2110,7 @@
         
         <!-- 项目3：Apple风格网站 -->
         <div class="project-item fade-in-up">
-          <div class="project-visual" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
+          <div class="project-visual">
             <div class="project-visual-content">
               <span class="project-visual-icon">🎨</span>
               <div class="project-visual-title">Apple风格</div>
@@ -2788,11 +2790,14 @@
 
     window.addEventListener('scroll', function() {
       const currentScroll = window.pageYOffset;
+      const navbar = document.querySelector('.navbar');
       
       if (currentScroll > 100) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.85)';
+        navbar.style.background = 'var(--glass-bg)';
+        navbar.style.backdropFilter = 'saturate(180%) blur(var(--glass-blur))';
       } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.72)';
+        navbar.style.background = 'var(--glass-bg)';
+        navbar.style.backdropFilter = 'saturate(180%) blur(var(--glass-blur))';
       }
       
       lastScroll = currentScroll;
