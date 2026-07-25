@@ -3046,11 +3046,16 @@
         const computedStyle = getComputedStyle(document.documentElement);
         const displayGradient = computedStyle.getPropertyValue('--display-gradient').trim();
         
-        // 根据深色模式选择光晕颜色
+        // 根据深色模式选择光晕颜色（调浅版本）
         const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
         const glowColor = isDarkMode 
-          ? 'rgba(41, 38, 61, 0.6)'
-          : 'rgba(30, 50, 80, 0.4)';
+          ? 'rgba(80, 80, 100, 0.25)'  // 深色模式：浅灰紫
+          : 'rgba(100, 100, 120, 0.15)';  // 浅色模式：浅灰
+        
+        // 旧版本（较深）：回滚时恢复
+        // const glowColor = isDarkMode 
+        //   ? 'rgba(41, 38, 61, 0.6)'
+        //   : 'rgba(30, 50, 80, 0.4)';
         
         this.style.background = `radial-gradient(circle at ${x}px ${y}px, ${glowColor} 0%, transparent 60%), ${displayGradient}`;
       });
