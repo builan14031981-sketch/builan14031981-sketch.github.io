@@ -1746,6 +1746,53 @@
       font-weight: 600;
       color: var(--text-primary);
       margin-bottom: 12px;
+      margin-top: 32px;
+    }
+    .modal-section-title:first-of-type {
+      margin-top: 0;
+    }
+    .modal-positioning {
+      font-size: 17px;
+      color: var(--accent-blue);
+      font-weight: 500;
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+    .modal-tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .modal-tech-tag {
+      padding: 8px 16px;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-light);
+    }
+    .modal-background {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .modal-problems {
+      list-style: none;
+      margin-bottom: 24px;
+    }
+    .modal-problems li {
+      padding: 8px 0;
+      padding-left: 24px;
+      position: relative;
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+    .modal-problems li::before {
+      content: '⚡';
+      position: absolute;
+      left: 0;
     }
     .modal-features {
       list-style: none;
@@ -1764,6 +1811,26 @@
       left: 0;
       color: var(--accent-blue);
       font-weight: 600;
+    }
+    .modal-links {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-color);
+    }
+    .modal-link {
+      padding: 12px 24px;
+      background: var(--accent-blue);
+      color: white;
+      border-radius: 980px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: background 0.2s ease;
+    }
+    .modal-link:hover {
+      background: var(--accent-blue-hover);
     }
 
     /* ========== 滚动动画 ========== */
@@ -2091,11 +2158,24 @@
       <div class="modal-body">
         <div class="modal-category" id="projectModalCategory">项目类别</div>
         <h2 class="modal-title" id="projectModalTitle">项目标题</h2>
+        <p class="modal-positioning" id="projectModalPositioning">项目定位...</p>
         <p class="modal-desc" id="projectModalDesc">项目描述...</p>
         <div id="projectModalImage2" style="display:none; margin-bottom: 24px;"></div>
         <div class="modal-tags" id="projectModalTags"></div>
+        
+        <h3 class="modal-section-title">技术栈</h3>
+        <div class="modal-tech-stack" id="projectModalTechStack"></div>
+        
+        <h3 class="modal-section-title">开发背景</h3>
+        <p class="modal-background" id="projectModalBackground">开发背景...</p>
+        
+        <h3 class="modal-section-title">解决的问题</h3>
+        <ul class="modal-problems" id="projectModalProblems"></ul>
+        
         <h3 class="modal-section-title">核心功能</h3>
         <ul class="modal-features" id="projectModalFeatures"></ul>
+        
+        <div class="modal-links" id="projectModalLinks"></div>
       </div>
     </div>
   </div>
@@ -2327,7 +2407,16 @@
         image2: '<img src="https://raw.githubusercontent.com/builan14031981-sketch/builan14031981-sketch.github.io/main/images/noteproject.png" style="width:100%;border-radius:var(--radius-lg);">',
         category: '桌面应用开发',
         title: 'Electron智能便签工具',
+        positioning: '一个简单好用的桌面便签工具，承载用户的奇思妙想',
         desc: '一款轻量级Electron桌面便签应用，支持多书签、主题切换、设置面板、模式预设等功能。这是我独立开发的第二个完善的小软件，旨在提供一个简单好用的工具来承载用户的奇思妙想。',
+        techStack: ['Electron 28', 'HTML/CSS/JS', 'Node.js', '原生拖拽API'],
+        background: '想要一个可以在桌面快速记录想法的工具，市面上的便签软件要么太复杂，要么不够美观，于是决定自己开发一个。',
+        problems: [
+          '解决Electron窗口置顶问题，实现screen-saver级别置顶',
+          '实现Mini Window独立窗口，支持拖动和点击恢复',
+          '设计7套主题系统，实现Theme与Appearance分离',
+          '实现任务三态系统（待完成/已完成/暂不可做）'
+        ],
         tags: ['Electron', '桌面应用', 'AI Agent', 'Node.js'],
         features: [
           '多书签管理 — 创建、重命名、删除书签页',
@@ -2339,13 +2428,25 @@
           '7个主题 — 暖沙、雾蓝、森林绿、樱花粉、深夜黑、石墨灰、薄荷绿',
           '任务状态系统 — 待完成/已完成/暂不可做',
           '开机自启动设置'
+        ],
+        links: [
+          { name: 'GitHub', url: 'https://github.com/builan14031981-sketch' }
         ]
       },
       {
         image: '🤖',
         category: 'AI应用开发',
         title: '本地AI助手系统',
+        positioning: '企业级私有化AI部署实践，探索AI Agent自动化应用',
         desc: '搭建本地大语言模型运行环境，探索AI Agent自动化应用。通过集成Ollama、DeepSeek、Qwen等模型，实现智能化工作流，让AI真正成为开发者的得力助手。',
+        techStack: ['Ollama', 'Qwen3', 'DeepSeek', 'Python', 'Web后端'],
+        background: '企业内部资料不能随意上传到第三方平台，需要一套私有化AI助手系统，让员工能够安全地使用AI能力。',
+        problems: [
+          '解决本地模型性能与响应速度的平衡问题',
+          '实现文件上传与AI内容理解的完整链路',
+          '设计用户权限系统，区分管理员和普通员工',
+          '实现表格数据分析能力'
+        ],
         tags: ['Ollama', 'DeepSeek', 'Qwen', 'AI Agent'],
         features: [
           '本地模型部署 — 使用Ollama运行开源大模型',
@@ -2354,13 +2455,23 @@
           'Prompt优化 — 针对不同场景设计专用Prompt',
           '上下文管理 — 维护对话历史，提升交互体验',
           'API集成 — 支持调用云端API扩展能力'
-        ]
+        ],
+        links: []
       },
       {
         image: '🎨',
         category: 'Web前端开发',
         title: '产品展示网站设计与开发',
+        positioning: 'Apple HIG风格个人作品展示网站，展示设计审美与开发能力',
         desc: '参考Apple视觉语言完成产品展示网站设计，负责页面结构和交互体验。实现毛玻璃效果、流畅动效和响应式布局，展现精细的前端开发能力和UI设计审美。',
+        techStack: ['HTML/CSS/JS', 'CSS Variables', 'IntersectionObserver', '小米MiMo API'],
+        background: '想要一个能够体现自己设计理念和开发能力的个人作品网站，而不是普通的简历页面。',
+        problems: [
+          '实现Apple风格的毛玻璃效果和深色模式',
+          '设计统一的CSS变量系统，支持主题切换',
+          '实现跟随鼠标的渐变光晕效果',
+          '接入小米MiMo API，实现AI助手功能'
+        ],
         tags: ['HTML/CSS/JS', 'Landing Page', 'Apple HIG', '响应式'],
         features: [
           'Apple风格设计 — 毛玻璃效果、精致圆角、流畅动画',
@@ -2369,6 +2480,9 @@
           'AI助手集成 — 接入小米MiMo API，提供智能问答',
           '滚动动画 — 使用IntersectionObserver实现优雅的入场效果',
           '项目详情弹窗 — 点击查看项目详细信息'
+        ],
+        links: [
+          { name: '在线预览', url: 'https://builan14031981-sketch.github.io' }
         ]
       }
     ];
@@ -2400,6 +2514,7 @@
       }
       document.getElementById('projectModalCategory').textContent = project.category;
       document.getElementById('projectModalTitle').textContent = project.title;
+      document.getElementById('projectModalPositioning').textContent = project.positioning || '';
       document.getElementById('projectModalDesc').textContent = project.desc;
       
       // 渲染正文图片（如果有）
@@ -2416,9 +2531,51 @@
       const tagsContainer = document.getElementById('projectModalTags');
       tagsContainer.innerHTML = project.tags.map(tag => `<span class="modal-tag">${tag}</span>`).join('');
       
+      // 渲染技术栈
+      const techStackContainer = document.getElementById('projectModalTechStack');
+      if (project.techStack) {
+        techStackContainer.innerHTML = project.techStack.map(tech => `<span class="modal-tech-tag">${tech}</span>`).join('');
+        techStackContainer.style.display = 'flex';
+      } else {
+        techStackContainer.innerHTML = '';
+        techStackContainer.style.display = 'none';
+      }
+      
+      // 渲染开发背景
+      const backgroundContainer = document.getElementById('projectModalBackground');
+      if (project.background) {
+        backgroundContainer.textContent = project.background;
+        backgroundContainer.style.display = 'block';
+      } else {
+        backgroundContainer.textContent = '';
+        backgroundContainer.style.display = 'none';
+      }
+      
+      // 渲染解决的问题
+      const problemsContainer = document.getElementById('projectModalProblems');
+      if (project.problems) {
+        problemsContainer.innerHTML = project.problems.map(problem => `<li>${problem}</li>`).join('');
+        problemsContainer.style.display = 'block';
+      } else {
+        problemsContainer.innerHTML = '';
+        problemsContainer.style.display = 'none';
+      }
+      
       // 渲染功能列表
       const featuresContainer = document.getElementById('projectModalFeatures');
       featuresContainer.innerHTML = project.features.map(feature => `<li>${feature}</li>`).join('');
+      
+      // 渲染项目链接
+      const linksContainer = document.getElementById('projectModalLinks');
+      if (project.links && project.links.length > 0) {
+        linksContainer.innerHTML = project.links.map(link => 
+          `<a href="${link.url}" target="_blank" class="modal-link">${link.name} →</a>`
+        ).join('');
+        linksContainer.style.display = 'flex';
+      } else {
+        linksContainer.innerHTML = '';
+        linksContainer.style.display = 'none';
+      }
       
       document.getElementById('projectModal').classList.add('active');
       document.body.style.overflow = 'hidden';
