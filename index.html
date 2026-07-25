@@ -205,17 +205,17 @@
     .loader-bar::after {
       content: '';
       display: block;
-      width: 100%;
+      width: 0%;
       height: 100%;
       background: var(--text-primary);
       border-radius: 2px;
-      animation: loading 1.2s ease-in-out;
+      animation: loading 1.5s ease-in-out forwards;
     }
 
     @keyframes loading {
-      0% { transform: translateX(-100%); }
-      50% { transform: translateX(0); }
-      100% { transform: translateX(100%); }
+      0% { width: 0%; }
+      50% { width: 70%; }
+      100% { width: 100%; }
     }
 
     @keyframes fadeInUp {
@@ -2820,9 +2820,10 @@
     window.addEventListener('load', function() {
       initTheme(); // 初始化深色模式
       initThemeStyle(); // 初始化主题样式
+      // 等动画播放完再隐藏
       setTimeout(function() {
         document.getElementById('pageLoader').classList.add('loaded');
-      }, 1500);
+      }, 1800);
     });
 
     // ========== 滚动动画 ==========
