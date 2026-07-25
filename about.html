@@ -610,7 +610,7 @@
         <div class="nav-divider"></div>
         <span class="nav-title">关于我</span>
       </div>
-      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button>
     </div>
   </nav>
 
@@ -732,6 +732,26 @@
     </div>
   </section>
 
+  <!-- 个人实践 -->
+  <section class="chapter">
+    <div class="chapter-container">
+      <div class="chapter-header">
+        <div class="chapter-number">实践探索</div>
+        <h2 class="chapter-title">从内容创作到产品设计</h2>
+      </div>
+      <div class="chapter-content">
+        <h3>内容运营实践</h3>
+        <p>独立运营短视频内容，累计播放量<strong>150W+</strong>。这段经历让我学会了如何理解用户需求、创造有价值的内容，也培养了我的审美和表达能力。</p>
+        
+        <h3>AI创作实践</h3>
+        <p>探索AI在创作领域的应用，包括AI辅助视频创作、AI小说分析与续写工作流。通过这些实践，我发现了AI不仅是开发工具，更是创作的伙伴。</p>
+        
+        <h3>产品设计实践</h3>
+        <p>参与<strong>天枢</strong>数字产品的视觉设计，包括UI体系设计、AI角色卡设计、桌宠视觉设计等。这些项目让我将设计能力应用到实际产品中。</p>
+      </div>
+    </div>
+  </section>
+
   <!-- 未来方向 -->
   <section class="future">
     <div class="future-container">
@@ -757,6 +777,7 @@
       <div class="contact-links">
         <a href="mailto:3220389580@qq.com" class="contact-link contact-link-primary">发送邮件</a>
         <a href="https://github.com/builan14031981-sketch" target="_blank" class="contact-link contact-link-secondary">GitHub</a>
+        <a href="#" class="contact-link contact-link-secondary">抖音</a>
       </div>
     </div>
   </section>
@@ -778,11 +799,11 @@
       
       if (newTheme === 'dark') {
         html.setAttribute('data-theme', 'dark');
-        document.getElementById('themeToggle').textContent = '☀️';
+        document.getElementById('themeToggle').innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>';
         localStorage.setItem('theme', 'dark');
       } else {
         html.removeAttribute('data-theme');
-        document.getElementById('themeToggle').textContent = '🌙';
+        document.getElementById('themeToggle').innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>';
         localStorage.setItem('theme', 'light');
       }
     }
@@ -792,7 +813,7 @@
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
-        document.getElementById('themeToggle').textContent = '☀️';
+        document.getElementById('themeToggle').innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>';
       }
     }
 
