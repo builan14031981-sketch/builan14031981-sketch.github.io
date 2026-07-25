@@ -547,11 +547,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .project-visual:hover {
-      transform: scale(1.03);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
     }
 
     .project-visual-content {
@@ -690,9 +691,8 @@
     }
 
     .skill-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-      border-color: rgba(0, 113, 227, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
     }
 
     .skill-card:hover::before {
@@ -1511,6 +1511,9 @@
       background: var(--bg-secondary);
       border-color: var(--border-light);
     }
+    [data-theme="dark"] .skill-card:hover {
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
     [data-theme="dark"] .highlight-item,
     [data-theme="dark"] .sidebar-section {
       background: var(--bg-secondary);
@@ -1524,10 +1527,10 @@
       background: var(--bg-gradient-dark) !important;
     }
     [data-theme="dark"] .project-card:hover {
-      box-shadow: var(--shadow-md);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
     }
     [data-theme="dark"] .blog-card:hover {
-      box-shadow: var(--shadow-md);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
     }
     [data-theme="dark"] .ai-chat-window {
       background: var(--bg-secondary);
@@ -1588,8 +1591,8 @@
       border: 1px solid var(--border-light);
     }
     .blog-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
     }
     .blog-card-image {
       width: 100%;
