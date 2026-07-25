@@ -1958,14 +1958,14 @@
         </div>
         
         <div class="blog-card fade-in-up" onclick="openBlogModal(1)">
-          <div class="blog-card-image">💻</div>
+          <div class="blog-card-image">🏢</div>
           <div class="blog-card-content">
             <div class="blog-card-meta">
-              <span class="blog-card-date">2026-07-15</span>
-              <span class="blog-card-tag">Electron</span>
+              <span class="blog-card-date">2026-07-18</span>
+              <span class="blog-card-tag">AI应用</span>
             </div>
-            <h3 class="blog-card-title">Electron桌面应用开发入门指南</h3>
-            <p class="blog-card-desc">从零开始构建一个完整的Electron桌面应用，涵盖主进程、渲染进程通信。</p>
+            <h3 class="blog-card-title">从一台个人电脑到企业级AI助手</h3>
+            <p class="blog-card-desc">本地大模型部署实践：Ollama + Qwen3 企业私有化AI系统建设全记录。</p>
           </div>
         </div>
         
@@ -2229,10 +2229,10 @@
         content: '在当今快速发展的技术环境中，AI Agent已经成为提升开发效率的重要工具。通过合理设计Prompt和工作流，我们可以让AI协助完成代码生成、问题分析、方案设计等任务。\n\n首先，Prompt设计是关键。好的Prompt应该包含清晰的上下文、明确的任务描述和期望的输出格式。其次，建立标准化的工作流程，让AI能够持续地为项目贡献价值。\n\n在实践中，我发现AI Agent最擅长的是：1）快速生成代码模板；2）分析和解释复杂代码；3）提供多种解决方案供选择；4）自动化重复性任务。'
       },
       {
-        image: '💻',
-        category: 'Electron',
-        title: 'Electron桌面应用开发入门指南',
-        content: 'Electron是一个使用JavaScript、HTML和CSS构建跨平台桌面应用的框架。它结合了Chromium和Node.js，让Web开发者能够轻松创建原生应用。\n\n在开发桌面便签应用的过程中，我总结了几个关键点：1）主进程与渲染进程的通信机制；2）窗口管理和系统托盘的实现；3）数据持久化方案；4）打包和分发策略。\n\n对于想要入门Electron开发的开发者，建议从一个简单的项目开始，逐步添加功能。重点掌握IPC通信、窗口管理和数据存储这三个核心概念。'
+        image: '🏢',
+        category: 'AI应用',
+        title: '从一台个人电脑到企业级AI助手：本地大模型部署实践',
+        content: '项目背景\n\n随着大模型技术的发展，越来越多企业开始尝试将AI引入日常办公流程。但对于很多企业来说，直接使用云端AI服务存在几个问题：企业内部资料不能随意上传到第三方平台；数据安全和隐私无法完全掌控；长期使用API服务成本较高。\n\n因此，本次项目模拟了一次企业内部AI系统建设需求：为一家企业部署一套私有化AI助手系统，让员工能够登录内部平台，上传文件，并通过AI对企业资料进行查询、分析和辅助办公。\n\n第一阶段：本地大模型环境搭建\n\n选择了Ollama作为本地模型运行框架，原因包括：安装简单、支持Windows环境、可以快速切换不同模型、提供本地API接口。测试了DeepSeek-R1、Qwen3 1.7B/4B/8B等多个模型，最终选择Qwen3作为核心模型。\n\n第二阶段：解决本地模型调用问题\n\n真正的企业应用需要完整的调用链路：用户→企业网站→后端服务器→Ollama API→本地大模型→返回结果。实现了网页中的AI助手直接调用本地部署的大模型，不再依赖云端API。\n\n第三阶段：搭建企业内部管理网站\n\n设计了一套完整的内部系统，包括：登录系统、用户管理、文件中心、AI助手、数据分析模块。实现了员工账号体系，区分管理员和普通员工权限。\n\n第四阶段：文件上传与AI阅读\n\n支持Word文档、PDF文件、Excel表格的上传和AI分析。员工上传销售数据后，AI可以回答"今年第一季度销售额最高的产品是什么？"等问题。\n\n第五阶段：表格分析能力实现\n\n重点测试了AI对表格的理解能力。用户不需要自己制作复杂公式，只需"帮我分析这个月销售下降原因"，AI就能结合上传的数据进行分析。\n\n项目总结\n\n这次项目最大的收获，不只是成功运行了一个本地模型，而是完整经历了一套AI产品落地流程。技术链路包括：本地大模型部署、Ollama环境搭建、Qwen3模型接入、后端API开发、用户系统设计、文件处理、数据分析、Web应用集成。\n\n技术栈：Ollama、Qwen3、Python、Web后端、文件解析系统、数据分析模块、用户权限系统'
       },
       {
         image: '🎨',
