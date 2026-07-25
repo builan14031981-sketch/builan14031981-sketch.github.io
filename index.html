@@ -2108,23 +2108,23 @@
           </div>
         </div>
         
-        <!-- 项目3：智能办公平台 -->
+        <!-- 项目3：智能AI助手 -->
         <div class="project-item fade-in-up">
           <div class="project-visual">
             <div class="project-visual-content">
-              <span class="project-visual-icon">🏢</span>
-              <div class="project-visual-title">智能办公</div>
+              <span class="project-visual-icon">🤖</span>
+              <div class="project-visual-title">智能助手</div>
             </div>
           </div>
           <div class="project-info">
             <p class="project-category">AI应用开发</p>
-            <h3 class="project-title">企业微信智能办公平台</h3>
-            <p class="project-description">基于FastAPI的AI办公助手，集成大模型、任务管理、知识库、薪资管理、联网搜索。</p>
+            <h3 class="project-title">智能AI助手系统</h3>
+            <p class="project-description">可接入企业微信的智能助手，支持知识库读取、联网搜索、任务管理。</p>
             <div class="project-tags">
               <span class="project-tag">FastAPI</span>
               <span class="project-tag">AI Agent</span>
               <span class="project-tag">MiMo API</span>
-              <span class="project-tag">企业应用</span>
+              <span class="project-tag">知识库</span>
             </div>
             <a href="javascript:void(0)" class="project-link" onclick="openProjectModal(2)">
               了解项目详情
@@ -2613,31 +2613,30 @@
         links: []
       },
       {
-        image: '🏢',
-        image2: '<img src="https://raw.githubusercontent.com/builan14031981-sketch/builan14031981-sketch.github.io/main/images/screenshot_boss.png" style="width:100%;border-radius:var(--radius-lg);margin-bottom:16px;"><img src="https://raw.githubusercontent.com/builan14031981-sketch/builan14031981-sketch.github.io/main/images/screenshot_chat_home.png" style="width:100%;border-radius:var(--radius-lg);margin-bottom:16px;"><img src="https://raw.githubusercontent.com/builan14031981-sketch/builan14031981-sketch.github.io/main/images/screenshot_tasks_panel.png" style="width:100%;border-radius:var(--radius-lg);">',
+        image: '🤖',
+        image2: '<img src="file:///C:/智慧项目/wechat-agent/screenshot_boss.png" style="width:100%;border-radius:var(--radius-lg);margin-bottom:16px;"><img src="file:///C:/智慧项目/wechat-agent/screenshot_chat_home.png" style="width:100%;border-radius:var(--radius-lg);margin-bottom:16px;"><img src="file:///C:/智慧项目/wechat-agent/screenshot_tasks_panel.png" style="width:100%;border-radius:var(--radius-lg);">',
         category: 'AI应用开发',
-        title: '企业微信智能办公平台',
-        positioning: '企业级AI智能办公平台，集成大模型、任务管理、知识库、薪资管理',
-        desc: '基于FastAPI开发的AI办公助手，支持表格分析、任务管理、会议管理、知识库搜索、薪资管理、联网搜索。前端为Apple HIG风格单页Web界面，后端通过小米MiMo云端API调用大模型。',
-        techStack: ['FastAPI', 'Python', '小米MiMo API', 'SQLite', 'Bing搜索', 'Apple HIG'],
-        background: '企业需要一个智能化的办公平台，能够通过AI助手完成日常办公任务，同时保证数据安全和权限隔离。',
+        title: '智能AI助手系统',
+        positioning: '可接入企业微信的智能助手，支持知识库读取、联网搜索、任务管理',
+        desc: '基于FastAPI开发的智能AI助手，接入小米MiMo大模型，支持知识库文档读取、联网搜索、任务管理等功能。可通过企业微信随时调用，让AI成为真正的办公伙伴。',
+        techStack: ['FastAPI', 'Python', '小米MiMo API', 'SQLite', 'Bing搜索', '企业微信'],
+        background: '想要一个真正能用的AI助手，可以读取知识库文档，随时通过企业微信调用，而不是一个只能聊天的机器人。',
         problems: [
-          '集成小米MiMo大模型，实现智能对话和工具调用',
-          '实现联网搜索功能（Bing），获取实时信息',
-          '设计薪资数据安全隔离机制，保护员工隐私',
-          '实现老板/员工两级权限系统',
-          '支持Excel/CSV表格智能分析',
-          '知识库文档上传，AI自动生成摘要'
+          '接入小米MiMo大模型，实现智能对话',
+          '实现知识库功能，AI可读取文档内容',
+          '集成联网搜索（Bing），获取实时信息',
+          '设计任务管理系统，老板可分发任务',
+          '实现薪资数据安全隔离',
+          '支持企业微信接入'
         ],
-        tags: ['FastAPI', 'AI Agent', '企业应用', 'MiMo API'],
+        tags: ['FastAPI', 'AI Agent', 'MiMo API', '知识库'],
         features: [
-          'AI对话 — 接入小米MiMo大模型，智能问答',
+          '知识库读取 — 上传文档，AI自动摘要并可查询',
           '联网搜索 — Bing搜索集成，获取实时信息',
-          '任务管理 — 老板分发任务，员工查看执行',
-          '薪资管理 — Excel批量导入，安全隔离',
-          '知识库 — 文档上传，AI自动摘要',
-          '权限系统 — 老板/员工两级权限控制',
-          'Apple HIG风格 — 毛玻璃效果、精致圆角'
+          '任务管理 — 创建、分配、跟踪任务',
+          '企业微信接入 — 随时随地调用AI助手',
+          '数据安全 — 薪资等敏感数据隔离保护',
+          '智能对话 — 接入小米MiMo大模型'
         ],
         links: []
       }
