@@ -2245,7 +2245,7 @@
     // ========== 项目详情弹窗数据 ==========
     const projectDetails = [
       {
-        image: '📝',
+        image: '<img src="https://raw.githubusercontent.com/builan14031981-sketch/builan14031981-sketch.github.io/main/images/noteproject.png" style="width:100%;height:100%;object-fit:contain;border-radius:var(--radius-lg);">',
         category: '桌面应用开发',
         title: 'Electron智能便签工具',
         desc: '一款轻量级Electron桌面便签应用，支持多书签、主题切换、设置面板、模式预设等功能。这是我独立开发的第二个完善的小软件，旨在提供一个简单好用的工具来承载用户的奇思妙想。',
@@ -2313,7 +2313,12 @@
     // ========== 项目详情弹窗控制 ==========
     function openProjectModal(index) {
       const project = projectDetails[index];
-      document.getElementById('projectModalImage').textContent = project.image;
+      // 判断是否为HTML标签（图片）还是纯文本
+      if (project.image.startsWith('<')) {
+        document.getElementById('projectModalImage').innerHTML = project.image;
+      } else {
+        document.getElementById('projectModalImage').textContent = project.image;
+      }
       document.getElementById('projectModalCategory').textContent = project.category;
       document.getElementById('projectModalTitle').textContent = project.title;
       document.getElementById('projectModalDesc').textContent = project.desc;
