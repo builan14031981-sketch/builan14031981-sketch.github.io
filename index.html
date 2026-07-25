@@ -25,19 +25,101 @@
       --border-color: #d2d2d7;
       --border-light: rgba(0, 0, 0, 0.08);
       
-      /* 全局玻璃效果 */
-      --glass-bg: rgba(255, 255, 255, 0.8);
-      --glass-border: rgba(0, 0, 0, 0.08);
-      --glass-blur: 16px;
+      /* 全局玻璃效果 - 默认主题 */
+      --glass-bg: rgba(255, 255, 255, 0.72);
+      --glass-border: rgba(0, 0, 0, 0.1);
+      --glass-blur: 20px;
       
       /* 卡片阴影 */
-      --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-      --card-shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.1);
+      --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --card-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.15);
       
-      /* 展示区渐变 */
-      --display-gradient: linear-gradient(135deg, #f5f5f7, #ffffff);
+      /* 展示区渐变 - 默认主题使用蓝紫渐变 */
+      --display-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       
-      /* 圆角规范 */
+      /* 强调色渐变 */
+      --accent-gradient: linear-gradient(135deg, var(--accent-blue) 0%, #5856d6 100%);
+    }
+
+    /* 全局主题A：Silver Glass - 极简银灰 */
+    [data-theme-style="silver"] {
+      --glass-bg: rgba(255, 255, 255, 0.9);
+      --glass-border: rgba(0, 0, 0, 0.06);
+      --glass-blur: 12px;
+      --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+      --card-shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.08);
+      --display-gradient: linear-gradient(135deg, #e8e8ed 0%, #f5f5f7 50%, #ffffff 100%);
+      --accent-gradient: linear-gradient(135deg, #86868b 0%, #6e6e73 100%);
+    }
+
+    /* 全局主题B：Apple Blue Glass - 浅蓝玻璃 */
+    [data-theme-style="blue"] {
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(0, 113, 227, 0.12);
+      --glass-blur: 16px;
+      --card-shadow: 0 4px 16px rgba(0, 113, 227, 0.06);
+      --card-shadow-hover: 0 12px 40px rgba(0, 113, 227, 0.12);
+      --display-gradient: linear-gradient(135deg, rgba(0,113,227,0.08) 0%, rgba(90,200,250,0.12) 50%, rgba(0,113,227,0.06) 100%);
+      --accent-gradient: linear-gradient(135deg, #0071e3 0%, #00c7ff 100%);
+    }
+
+    /* 深色模式变量 - 参考macOS Dark Mode */
+    [data-theme="dark"] {
+      /* 主色调 */
+      --accent-blue: #0a84ff;
+      --accent-blue-hover: #409cff;
+      
+      /* 文字颜色 */
+      --text-primary: #f5f5f7;
+      --text-secondary: #a1a1a6;
+      --text-tertiary: #86868b;
+      
+      /* 背景层次 */
+      --bg-primary: #1c1c1e;
+      --bg-secondary: #2c2c2e;
+      --bg-tertiary: #3a3a3c;
+      --bg-elevated: #48484a;
+      
+      /* 边框颜色 */
+      --border-color: #38383a;
+      --border-light: rgba(255, 255, 255, 0.06);
+      
+      /* 玻璃效果 - 深色默认 */
+      --glass-bg: rgba(44, 44, 46, 0.72);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-blur: 20px;
+      
+      /* 卡片阴影 */
+      --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      --card-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.4);
+      
+      /* 展示区渐变 - 深色默认使用深紫渐变 */
+      --display-gradient: linear-gradient(135deg, #2d1b69 0%, #1a1a2e 50%, #0f3460 100%);
+      
+      /* 强调色渐变 */
+      --accent-gradient: linear-gradient(135deg, #0a84ff 0%, #5856d6 100%);
+    }
+
+    /* 深色模式主题A：Silver Glass */
+    [data-theme="dark"][data-theme-style="silver"] {
+      --glass-bg: rgba(44, 44, 46, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --display-gradient: linear-gradient(135deg, #2c2c2e 0%, #3a3a3c 50%, #2c2c2e 100%);
+      --accent-gradient: linear-gradient(135deg, #a1a1a6 0%, #86868b 100%);
+    }
+
+    /* 深色模式主题B：Apple Blue Glass */
+    [data-theme="dark"][data-theme-style="blue"] {
+      --glass-bg: rgba(44, 44, 46, 0.8);
+      --glass-border: rgba(10, 132, 255, 0.15);
+      --card-shadow: 0 4px 20px rgba(10, 132, 255, 0.15);
+      --card-shadow-hover: 0 12px 40px rgba(10, 132, 255, 0.25);
+      --display-gradient: linear-gradient(135deg, rgba(10,132,255,0.12) 0%, rgba(88,86,214,0.1) 50%, rgba(10,132,255,0.08) 100%);
+      --accent-gradient: linear-gradient(135deg, #0a84ff 0%, #5e5ce6 100%);
+    }
+
+    /* 圆角规范 */
+    :root {
       --radius-sm: 8px;
       --radius-md: 12px;
       --radius-lg: 18px;
@@ -56,74 +138,6 @@
       --transition-fast: 0.2s ease;
       --transition-normal: 0.3s ease;
       --transition-slow: 0.5s cubic-bezier(0.28, 0.11, 0.32, 1);
-    }
-
-    /* 全局主题A：Silver Glass */
-    [data-theme-style="silver"] {
-      --glass-bg: rgba(255, 255, 255, 0.85);
-      --glass-border: rgba(0, 0, 0, 0.06);
-      --glass-blur: 12px;
-      --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-      --card-shadow-hover: 0 6px 24px rgba(0, 0, 0, 0.08);
-      --display-gradient: linear-gradient(135deg, #f5f5f7, #ffffff);
-      --accent-blue: #0071e3;
-    }
-
-    /* 全局主题B：Apple Blue Glass */
-    [data-theme-style="blue"] {
-      --glass-bg: rgba(255, 255, 255, 0.82);
-      --glass-border: rgba(0, 113, 227, 0.1);
-      --glass-blur: 16px;
-      --card-shadow: 0 4px 16px rgba(0, 113, 227, 0.06);
-      --card-shadow-hover: 0 8px 30px rgba(0, 113, 227, 0.1);
-      --display-gradient: linear-gradient(135deg, rgba(0,113,227,0.12), rgba(90,200,250,0.15));
-      --accent-blue: #0071e3;
-    }
-
-    /* 深色模式变量 - 参考macOS Dark Mode */
-    [data-theme="dark"] {
-      /* 主色调 - 仅用于小型强调元素 */
-      --accent-blue: #0a84ff;
-      --accent-blue-hover: #409cff;
-      
-      /* 文字颜色 */
-      --text-primary: #f5f5f7;
-      --text-secondary: #a1a1a6;
-      --text-tertiary: #86868b;
-      
-      /* 背景层次 - 深空灰系 */
-      --bg-primary: #1c1c1e;
-      --bg-secondary: #2c2c2e;
-      --bg-tertiary: #3a3a3c;
-      --bg-elevated: #48484a;
-      
-      /* 边框颜色 */
-      --border-color: #38383a;
-      --border-light: rgba(255, 255, 255, 0.06);
-      
-      /* 玻璃效果 */
-      --glass-bg: rgba(44, 44, 46, 0.8);
-      --glass-border: rgba(255, 255, 255, 0.08);
-      --glass-blur: 16px;
-      
-      /* 卡片阴影 */
-      --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-      --card-shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.3);
-      
-      /* 展示区渐变 */
-      --display-gradient: linear-gradient(135deg, #2c2c2e, #1c1c1e);
-    }
-
-    /* 深色模式下的主题变体 */
-    [data-theme="dark"][data-theme-style="silver"] {
-      --glass-bg: rgba(44, 44, 46, 0.85);
-      --display-gradient: linear-gradient(135deg, #2c2c2e, #3a3a3c);
-    }
-
-    [data-theme="dark"][data-theme-style="blue"] {
-      --glass-bg: rgba(44, 44, 46, 0.82);
-      --glass-border: rgba(10, 132, 255, 0.15);
-      --display-gradient: linear-gradient(135deg, rgba(10,132,255,0.1), rgba(90,200,250,0.08));
     }
 
     html {
@@ -1997,9 +2011,9 @@
         <li><a href="#contact" class="nav-cta">联系我</a></li>
         <li>
           <div class="theme-controls">
-            <button class="theme-style-btn" onclick="switchThemeStyle('default')" title="默认主题">D</button>
-            <button class="theme-style-btn" onclick="switchThemeStyle('silver')" title="Silver Glass">S</button>
-            <button class="theme-style-btn" onclick="switchThemeStyle('blue')" title="Apple Blue">B</button>
+            <button class="theme-style-btn active" onclick="switchThemeStyle('default')" title="默认主题（蓝紫渐变）">D</button>
+            <button class="theme-style-btn" onclick="switchThemeStyle('silver')" title="Silver Glass（极简银灰）">S</button>
+            <button class="theme-style-btn" onclick="switchThemeStyle('blue')" title="Apple Blue Glass（浅蓝玻璃）">B</button>
             <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
           </div>
         </li>
