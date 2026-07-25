@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>博客 - 严志辉</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --accent-blue: #0071e3;
+      --accent-blue-hover: #0077ed;
+      --text-primary: #1d1d1f;
+      --text-secondary: #86868b;
+      --text-tertiary: #6e6e73;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f5f5f7;
+      --bg-tertiary: #fbfbfd;
+      --border-color: #d2d2d7;
+      --border-light: rgba(0, 0, 0, 0.08);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 28px;
+    }
+
+    [data-theme="dark"] {
+      --text-primary: #f5f5f7;
+      --text-secondary: #a1a1a6;
+      --text-tertiary: #86868b;
+      --bg-primary: #000000;
+      --bg-secondary: #1d1d1f;
+      --bg-tertiary: #2d2d2f;
+      --border-color: #38383a;
+      --border-light: rgba(255, 255, 255, 0.08);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 导航栏 */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      z-index: 1000;
+    }
+
+    [data-theme="dark"] .navbar {
+      background: rgba(0, 0, 0, 0.72);
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-back {
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-back:hover {
+      opacity: 0.8;
+    }
+
+    .nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      padding: 4px;
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      opacity: 1;
+    }
+
+    /* Hero区域 */
+    .hero {
+      padding: 140px 40px 80px;
+      text-align: center;
+      background: var(--bg-primary);
+    }
+
+    .hero-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-title {
+      font-size: 56px;
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .hero-subtitle {
+      font-size: 21px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      letter-spacing: -0.3px;
+    }
+
+    /* 文章列表 */
+    .articles {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px 120px;
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .article-card {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      border: 1px solid var(--border-light);
+    }
+
+    .article-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .article-card.featured {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .article-cover {
+      width: 100%;
+      height: 240px;
+      background: linear-gradient(135deg, var(--accent-blue) 0%, #5856d6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+    }
+
+    .article-card.featured .article-cover {
+      height: 100%;
+      min-height: 300px;
+    }
+
+    .article-content {
+      padding: 32px;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .article-category {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .article-date {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .article-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+      line-height: 1.3;
+    }
+
+    .article-card.featured .article-title {
+      font-size: 32px;
+      letter-spacing: -1px;
+    }
+
+    .article-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .article-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent-blue);
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .article-link-arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .article-card:hover .article-link-arrow {
+      transform: translateX(4px);
+    }
+
+    /* 底部 */
+    .footer {
+      background: var(--bg-secondary);
+      padding: 32px 0;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      text-align: center;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .footer-link {
+      color: var(--accent-blue);
+      text-decoration: none;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    /* 响应式 */
+    @media (max-width: 1024px) {
+      .articles-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .article-card.featured {
+        grid-column: span 1;
+        display: block;
+      }
+
+      .article-card.featured .article-cover {
+        height: 240px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 120px 20px 60px;
+      }
+
+      .hero-title {
+        font-size: 40px;
+      }
+
+      .hero-subtitle {
+        font-size: 17px;
+      }
+
+      .articles {
+        padding: 0 20px 80px;
+      }
+
+      .article-content {
+        padding: 24px;
+      }
+
+      .article-title {
+        font-size: 20px;
+      }
+
+      .article-card.featured .article-title {
+        font-size: 24px;
+      }
+
+      .nav-container {
+        padding: 0 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html#blog" class="nav-back">← 返回首页</a>
+      <span class="nav-title">严志辉的博客</span>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-container">
+      <h1 class="hero-title">Blog</h1>
+      <p class="hero-subtitle">记录我的设计探索、AI实践和独立开发经历。</p>
+    </div>
+  </section>
+
+  <section class="articles">
+    <div class="articles-grid" id="articlesGrid">
+      <!-- 文章将通过JavaScript动态加载 -->
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <p class="footer-text">
+        © 2026 严志辉 · <a href="../index.html" class="footer-link">返回首页</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // 主题切换
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      if (newTheme === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+        document.getElementById('themeToggle').textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        html.removeAttribute('data-theme');
+        document.getElementById('themeToggle').textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    // 初始化主题
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('themeToggle').textContent = '☀️';
+      }
+    }
+
+    // 加载文章数据
+    async function loadArticles() {
+      try {
+        const response = await fetch('../articles.json');
+        const articles = await response.json();
+        renderArticles(articles);
+      } catch (error) {
+        console.error('加载文章失败:', error);
+        // 使用默认数据
+        const defaultArticles = [
+          {
+            id: 1,
+            title: "从向AI提问，到与AI协作开发",
+            description: "我的AI Agent探索之路：从搜索工具到开发伙伴的转变。",
+            category: "AI实践",
+            date: "2026年7月",
+            cover: "🤖",
+            url: "../blog-ai-collaboration.html",
+            featured: true
+          },
+          {
+            id: 2,
+            title: "从一台个人电脑到企业级AI助手",
+            description: "本地大模型部署实践：Ollama + Qwen3 企业私有化AI系统建设全记录。",
+            category: "AI应用",
+            date: "2026年7月",
+            cover: "🏢",
+            url: "../blog-ai-enterprise.html",
+            featured: true
+          },
+          {
+            id: 3,
+            title: "从喜欢苹果，到理解苹果",
+            description: "我的设计美学探索：从被"好看"吸引，到理解克制与留白的设计哲学。",
+            category: "设计探索",
+            date: "2026年7月",
+            cover: "🎨",
+            url: "../blog-design-aesthetics.html",
+            featured: true
+          }
+        ];
+        renderArticles(defaultArticles);
+      }
+    }
+
+    // 渲染文章列表
+    function renderArticles(articles) {
+      const grid = document.getElementById('articlesGrid');
+      grid.innerHTML = '';
+
+      articles.forEach(article => {
+        const card = document.createElement('a');
+        card.href = article.url;
+        card.className = `article-card${article.featured ? ' featured' : ''}`;
+        
+        card.innerHTML = `
+          <div class="article-cover">${article.cover}</div>
+          <div class="article-content">
+            <div class="article-meta">
+              <span class="article-category">${article.category}</span>
+              <span class="article-date">${article.date}</span>
+            </div>
+            <h2 class="article-title">${article.title}</h2>
+            <p class="article-desc">${article.description}</p>
+            <span class="article-link">
+              阅读文章
+              <span class="article-link-arrow">→</span>
+            </span>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+    }
+
+    // 初始化
+    window.addEventListener('load', function() {
+      initTheme();
+      loadArticles();
+    });
+  </script>
+</body>
+</html>
