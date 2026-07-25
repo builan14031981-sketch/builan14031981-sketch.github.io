@@ -1602,6 +1602,38 @@
       align-items: center;
       justify-content: center;
       font-size: 48px;
+      transition: background 0.3s ease;
+    }
+    /* 博客卡片主题A：Silver Glass */
+    .blog-theme-silver .blog-card-image {
+      background: linear-gradient(135deg, #f5f5f7, #ffffff);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .blog-theme-silver .blog-card-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    /* 博客卡片主题B：Apple Blue Glass */
+    .blog-theme-blue .blog-card-image {
+      background: linear-gradient(135deg, rgba(0, 113, 227, 0.12), rgba(90, 200, 250, 0.18));
+    }
+    /* 深色模式兼容 */
+    [data-theme="dark"] .blog-theme-silver .blog-card-image {
+      background: linear-gradient(135deg, #2c2c2e, #3a3a3c);
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+    [data-theme="dark"] .blog-theme-silver .blog-card-image::before {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    [data-theme="dark"] .blog-theme-blue .blog-card-image {
+      background: linear-gradient(135deg, rgba(10, 132, 255, 0.15), rgba(90, 200, 250, 0.1));
     }
     .blog-card-content {
       padding: 24px;
@@ -1634,6 +1666,26 @@
       font-size: 15px;
       color: var(--text-secondary);
       line-height: 1.5;
+    }
+
+    /* 博客主题切换按钮 */
+    .blog-theme-btn {
+      padding: 6px 14px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: 980px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .blog-theme-btn:hover {
+      background: var(--bg-tertiary);
+    }
+    .blog-theme-btn.active {
+      background: var(--accent-blue);
+      color: white;
+      border-color: var(--accent-blue);
     }
 
     /* ========== 项目详情弹窗 ========== */
@@ -2088,13 +2140,21 @@
         <p class="section-eyebrow">技术分享</p>
         <h2 class="section-title">博客文章</h2>
         <p class="section-subtitle">记录技术思考与实践经验</p>
-        <a href="blog/index.html" class="btn-secondary" style="margin-top: 24px; display: inline-flex;">
-          查看全部文章
-          <span class="btn-icon">→</span>
-        </a>
+        <div style="display: flex; gap: 12px; margin-top: 24px; justify-content: center; flex-wrap: wrap;">
+          <a href="blog/index.html" class="btn-secondary" style="display: inline-flex;">
+            查看全部文章
+            <span class="btn-icon">→</span>
+          </a>
+          <div class="blog-theme-switcher" style="display: flex; gap: 8px; align-items: center;">
+            <span style="font-size: 13px; color: var(--text-secondary);">卡片主题：</span>
+            <button class="blog-theme-btn active" onclick="switchBlogTheme('default')">默认</button>
+            <button class="blog-theme-btn" onclick="switchBlogTheme('silver')">Silver Glass</button>
+            <button class="blog-theme-btn" onclick="switchBlogTheme('blue')">Apple Blue</button>
+          </div>
+        </div>
       </div>
       
-      <div class="blog-grid">
+      <div class="blog-grid" id="blogGrid">
         <div class="blog-card fade-in-up" onclick="window.location.href='blog/article.html?id=ai-collaboration'">
           <div class="blog-card-image">🤖</div>
           <div class="blog-card-content">
@@ -2353,6 +2413,24 @@
   </div>
 
   <script>
+    // ========== 博客主题切换（测试功能） ==========
+    function switchBlogTheme(theme) {
+      const blogGrid = document.getElementById('blogGrid');
+      // 移除所有主题类
+      blogGrid.classList.remove('blog-theme-silver', 'blog-theme-blue');
+      // 添加选中的主题类
+      if (theme === 'silver') {
+        blogGrid.classList.add('blog-theme-silver');
+      } else if (theme === 'blue') {
+        blogGrid.classList.add('blog-theme-blue');
+      }
+      // 更新按钮状态
+      document.querySelectorAll('.blog-theme-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+    }
+
     // ========== 深色模式切换 ==========
     function toggleTheme() {
       const html = document.documentElement;
