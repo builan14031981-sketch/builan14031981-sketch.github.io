@@ -2776,7 +2776,11 @@
             model: API_CONFIG.model,
             messages: conversationHistory,
             temperature: 0.7,
-            max_tokens: 800
+            max_tokens: 800,
+            // 启用联网搜索
+            extra_body: {
+              enable_search: true
+            }
           })
         });
 
