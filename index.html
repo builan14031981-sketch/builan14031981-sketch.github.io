@@ -1038,6 +1038,24 @@
       align-items: center;
       padding-top: 32px;
       border-top: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-urls {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-urls a {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    .footer-urls a:hover {
+      color: var(--accent-blue);
     }
 
     .footer-copyright {
@@ -2414,7 +2432,7 @@
                 <span class="link-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
                 3220389580@qq.com
               </a>
-              <a href="#" class="link-item">
+              <a href="https://www.douyin.com/user/self?from_tab_name=main" target="_blank" class="link-item">
                 <span class="link-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h.01"/><path d="M15 12h.01"/><path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/><path d="M19 6.3a9 9 0 0 1 1.8 1.1 2 2 0 0 1 1 1.7v1a7 7 0 0 1-14 0v-1a2 2 0 0 1 1.1-1.7A9 9 0 0 1 12 4.5c.8 0 1.6.1 2.3.3"/><path d="M12 4.5V2"/></svg></span>
                 抖音主页
               </a>
@@ -2464,6 +2482,11 @@
         </div>
       </div>
       <div class="footer-bottom">
+        <div class="footer-urls">
+          <a href="https://builan14031981-sketch.github.io/" target="_blank">个人主页</a>
+          <a href="https://www.douyin.com/user/self?from_tab_name=main" target="_blank">抖音</a>
+          <a href="https://github.com/builan14031981-sketch?tab=repositories" target="_blank">GitHub仓库</a>
+        </div>
         <span class="footer-copyright">© 2026 严志辉. 保留所有权利.</span>
         <div class="footer-legal">
           <a href="#">隐私政策</a>
