@@ -3079,7 +3079,11 @@
     });
 
     // 初始化Lucide图标
-    lucide.createIcons();
+    window.addEventListener('load', function() {
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    });
   </script>
 
 </body>
