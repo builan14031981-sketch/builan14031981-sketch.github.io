@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>从一台个人电脑到企业级AI助手 - 严志辉的博客</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --accent-blue: #0071e3;
+      --text-primary: #1d1d1f;
+      --text-secondary: #86868b;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f5f5f7;
+      --border-color: #d2d2d7;
+    }
+
+    [data-theme="dark"] {
+      --text-primary: #f5f5f7;
+      --text-secondary: #a1a1a6;
+      --bg-primary: #000000;
+      --bg-secondary: #1d1d1f;
+      --border-color: #38383a;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      z-index: 1000;
+    }
+
+    [data-theme="dark"] .navbar {
+      background: rgba(0, 0, 0, 0.72);
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-container {
+      max-width: 900px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-back {
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-back:hover {
+      opacity: 0.8;
+    }
+
+    .article {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 100px 40px 80px;
+    }
+
+    .article-header {
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .article-category {
+      font-size: 14px;
+      color: var(--accent-blue);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .article-title {
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+    }
+
+    .article-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+
+    .article-content h2 {
+      font-size: 28px;
+      font-weight: 600;
+      margin: 48px 0 20px;
+      letter-spacing: -0.5px;
+    }
+
+    .article-content h3 {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 36px 0 16px;
+    }
+
+    .article-content p {
+      font-size: 17px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .article-content blockquote {
+      border-left: 4px solid var(--accent-blue);
+      padding: 16px 24px;
+      margin: 24px 0;
+      background: var(--bg-secondary);
+      border-radius: 0 12px 12px 0;
+      font-style: italic;
+      color: var(--text-primary);
+    }
+
+    .article-content ul, .article-content ol {
+      margin: 16px 0 24px 24px;
+      color: var(--text-secondary);
+    }
+
+    .article-content li {
+      margin-bottom: 8px;
+      font-size: 17px;
+    }
+
+    .article-content code {
+      background: var(--bg-secondary);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-family: "SF Mono", Monaco, Consolas, monospace;
+    }
+
+    .article-content pre {
+      background: #1d1d1f;
+      color: #f5f5f7;
+      padding: 24px;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 24px 0;
+    }
+
+    .article-content pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+    }
+
+    .article-content strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .article-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .article-tag {
+      padding: 8px 16px;
+      background: rgba(0, 113, 227, 0.1);
+      color: var(--accent-blue);
+      border-radius: 980px;
+      font-size: 14px;
+    }
+
+    .article-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .article-nav a {
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .article-nav a:hover {
+      opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+      .article {
+        padding: 80px 20px 60px;
+      }
+      .article-title {
+        font-size: 28px;
+      }
+      .article-content h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-back">← 返回首页</a>
+      <span style="font-size: 15px; font-weight: 600;">严志辉的博客</span>
+    </div>
+  </nav>
+
+  <article class="article">
+    <header class="article-header">
+      <div class="article-category">AI应用</div>
+      <h1 class="article-title">从一台个人电脑到企业级AI助手：一次本地大模型部署实践</h1>
+      <div class="article-meta">
+        <span>严志辉</span>
+        <span>2026-07-18</span>
+        <span>阅读时间：约10分钟</span>
+      </div>
+    </header>
+
+    <div class="article-content">
+      <h2>项目背景</h2>
+      <p>随着大模型技术的发展，越来越多企业开始尝试将AI引入日常办公流程。但是，对于很多企业来说，直接使用云端AI服务存在几个问题：</p>
+      <ul>
+        <li>企业内部资料不能随意上传到第三方平台；</li>
+        <li>数据安全和隐私无法完全掌控；</li>
+        <li>长期使用API服务成本较高；</li>
+        <li>员工需要一个符合自身业务流程的AI工具，而不是简单聊天机器人。</li>
+      </ul>
+
+      <p>因此，本次项目模拟了一次企业内部AI系统建设需求：</p>
+      <blockquote>为一家企业部署一套私有化AI助手系统，让员工能够登录内部平台，上传文件，并通过AI对企业资料进行查询、分析和辅助办公。</blockquote>
+
+      <p>整个项目目标：</p>
+      <ul>
+        <li>部署本地大语言模型；</li>
+        <li>搭建企业内部管理网站；</li>
+        <li>实现用户账号系统；</li>
+        <li>支持文件上传；</li>
+        <li>让AI助手读取文件内容；</li>
+        <li>实现表格分析能力；</li>
+        <li>最终将本地AI接入个人网站作为展示案例。</li>
+      </ul>
+
+      <h2>第一阶段：本地大模型环境搭建</h2>
+      <h3>选择Ollama作为模型运行环境</h3>
+      <p>项目第一步并不是开发网站，而是先解决AI模型运行问题。经过测试，选择了Ollama作为本地模型运行框架。</p>
+      <p>原因：</p>
+      <ul>
+        <li>安装简单；</li>
+        <li>支持Windows环境；</li>
+        <li>可以快速切换不同模型；</li>
+        <li>提供本地API接口，方便后端调用。</li>
+      </ul>
+
+      <p>最初测试了多个模型：</p>
+      <ul>
+        <li>DeepSeek-R1</li>
+        <li>Qwen3 1.7B</li>
+        <li>Qwen3 4B</li>
+        <li>Qwen3 8B</li>
+      </ul>
+
+      <p>其中：小模型响应速度更快，大模型推理能力更强，需要根据硬件性能进行平衡。</p>
+      <blockquote>最终选择：Qwen3作为企业AI助手核心模型。</blockquote>
+
+      <h2>第二阶段：解决本地模型调用问题</h2>
+      <p>单独运行Ollama只能通过终端聊天。真正的企业应用需要完整的调用链路：</p>
+      <pre><code>用户
+ ↓
+企业网站
+ ↓
+后端服务器
+ ↓
+Ollama API
+ ↓
+本地大模型
+ ↓
+返回结果</code></pre>
+
+      <p>核心流程：用户输入问题，网站接收请求，后端发送JSON格式的请求到Ollama API，然后Ollama返回AI回复。</p>
+      <pre><code>{
+  "model": "qwen3",
+  "messages": [
+    {
+      "role": "user",
+      "content": "分析这个销售表"
+    }
+  ]
+}</code></pre>
+
+      <p>最终实现：网页中的AI助手，不再依赖云端API，而是直接调用本地部署的大模型。</p>
+
+      <h2>第三阶段：搭建企业内部管理网站</h2>
+      <p>为了模拟真实企业环境，我没有只做一个聊天窗口，而是设计了一套内部系统。</p>
+
+      <h3>用户系统</h3>
+      <p>首先实现员工账号体系。不同员工拥有自己的账号：</p>
+      <ul>
+        <li><strong>管理员</strong>：管理用户、查看系统状态、管理文件</li>
+        <li><strong>普通员工</strong>：登录系统、上传资料、使用AI助手</li>
+      </ul>
+
+      <pre><code>企业内部网站
+├── 登录系统
+├── 用户管理
+├── 文件中心
+├── AI助手
+└── 数据分析模块</code></pre>
+
+      <h2>第四阶段：文件上传与AI阅读</h2>
+      <p>企业AI最重要的功能不是聊天，而是处理内部资料。因此加入文件上传功能，支持Word文档、PDF文件、Excel表格。</p>
+
+      <p>员工上传销售数据后，系统读取文件、提取内容、发送给AI、生成分析报告。例如：员工上传销售表后，AI可以回答：</p>
+      <blockquote>"今年第一季度销售额最高的产品是什么？"</blockquote>
+      <blockquote>"分析不同地区销售趋势。"</blockquote>
+
+      <h2>第五阶段：表格分析能力实现</h2>
+      <p>企业办公中，大量数据存在Excel中。所以重点测试了AI对表格的理解能力。</p>
+      <pre><code>Excel文件
+    ↓
+Python读取
+    ↓
+转换为结构化数据
+    ↓
+发送给Qwen3
+    ↓
+AI分析
+    ↓
+返回结果</code></pre>
+
+      <p>最终效果：用户不需要自己制作复杂公式。只需要"帮我分析这个月销售下降原因"，AI就能结合上传的数据进行分析。</p>
+
+      <h2>第六阶段：接入个人网站展示</h2>
+      <p>完成企业内部系统后，又进行了一个展示版本。将本地AI助手接入自己的个人网站。</p>
+
+      <p>访客进入个人主页，通过AI助手询问项目经历，AI根据资料回答。这个功能类似个人AI数字名片。</p>
+
+      <h2>项目最终架构</h2>
+      <pre><code>            用户
+             ↓
+      企业内部网站
+             ↓
+        后端服务
+             ↓
+    文件解析 / 数据处理
+             ↓
+         Ollama
+             ↓
+        Qwen3模型
+             ↓
+         AI回答</code></pre>
+
+      <h2>项目过程中遇到的问题</h2>
+
+      <h3>1. 本地模型性能限制</h3>
+      <p>最大的挑战是硬件限制。本地运行大模型需要考虑显存、内存、模型大小、推理速度。8B模型能力更强，但资源占用更高，所以需要不断测试不同模型。</p>
+
+      <h3>2. AI不是真正读取文件</h3>
+      <p>最初认为"上传文件→AI直接理解"，实际上中间需要：文件→解析→提取文本→构建上下文→发送模型。这也是企业知识库系统的基础。</p>
+
+      <h3>3. 从聊天机器人到业务工具</h3>
+      <p>真正困难的不是让AI回复一句话，而是如何让AI融入业务流程。企业需要的是：查资料、分析数据、辅助决策、自动生成报告，而不是另一个聊天窗口。</p>
+
+      <h2>项目总结</h2>
+      <p>这次项目最大的收获，不只是成功运行了一个本地模型，而是完整经历了一套AI产品落地流程：从"我想在电脑上跑一个大模型"到"我可以设计并部署一个企业内部AI系统"。</p>
+
+      <p>技术链路包括：</p>
+      <ul>
+        <li>本地大模型部署</li>
+        <li>Ollama环境搭建</li>
+        <li>Qwen3模型接入</li>
+        <li>后端API开发</li>
+        <li>用户系统设计</li>
+        <li>文件处理</li>
+        <li>数据分析</li>
+        <li>Web应用集成</li>
+      </ul>
+
+      <p>这也是未来企业AI应用的发展方向：不是单纯购买一个AI服务，而是根据自身业务建立属于自己的智能系统。</p>
+
+      <p><strong>项目名称：企业私有化AI助手系统部署实践</strong></p>
+      <p><strong>技术栈：Ollama、Qwen3、Python、Web后端、文件解析系统、数据分析模块、用户权限系统</strong></p>
+    </div>
+
+    <div class="article-tags">
+      <span class="article-tag">Ollama</span>
+      <span class="article-tag">Qwen3</span>
+      <span class="article-tag">本地部署</span>
+      <span class="article-tag">企业AI</span>
+      <span class="article-tag">AI Agent</span>
+    </div>
+
+    <div class="article-nav">
+      <a href="index.html">← 返回首页</a>
+      <a href="index.html#blog">更多文章 →</a>
+    </div>
+  </article>
+
+  <script>
+    // 同步主题
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
+</body>
+</html>
