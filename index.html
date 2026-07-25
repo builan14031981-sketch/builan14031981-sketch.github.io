@@ -1524,7 +1524,7 @@
       border-color: var(--glass-border);
     }
     [data-theme="dark"] .project-visual {
-      background: var(--bg-gradient-dark) !important;
+      /* 不设置固定背景，让JavaScript动态控制 */
     }
     [data-theme="dark"] .project-card:hover {
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
@@ -2697,14 +2697,23 @@
 
     // ========== 项目卡片悬停效果 ==========
     document.querySelectorAll('.project-visual').forEach(function(visual) {
-      const originalBg = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
+      // 根据主题选择原始背景
+      const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+      const originalBg = isDarkMode 
+        ? 'linear-gradient(135deg, #1c1c1e 0%, #29263d 100%)'
+        : 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
       
       visual.addEventListener('mousemove', function(e) {
         const rect = this.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         
-        this.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(30, 50, 80, 0.4) 0%, transparent 60%), ${originalBg}`;
+        // 根据主题选择光晕颜色
+        const glowColor = isDarkMode 
+          ? 'rgba(41, 38, 61, 0.6)'
+          : 'rgba(30, 50, 80, 0.4)';
+        
+        this.style.background = `radial-gradient(circle at ${x}px ${y}px, ${glowColor} 0%, transparent 60%), ${originalBg}`;
       });
       
       visual.addEventListener('mouseleave', function() {
