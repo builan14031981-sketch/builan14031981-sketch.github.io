@@ -25,6 +25,18 @@
       --border-color: #d2d2d7;
       --border-light: rgba(0, 0, 0, 0.08);
       
+      /* 全局玻璃效果 */
+      --glass-bg: rgba(255, 255, 255, 0.8);
+      --glass-border: rgba(0, 0, 0, 0.08);
+      --glass-blur: 16px;
+      
+      /* 卡片阴影 */
+      --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+      --card-shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.1);
+      
+      /* 展示区渐变 */
+      --display-gradient: linear-gradient(135deg, #f5f5f7, #ffffff);
+      
       /* 圆角规范 */
       --radius-sm: 8px;
       --radius-md: 12px;
@@ -46,6 +58,28 @@
       --transition-slow: 0.5s cubic-bezier(0.28, 0.11, 0.32, 1);
     }
 
+    /* 全局主题A：Silver Glass */
+    [data-theme-style="silver"] {
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(0, 0, 0, 0.06);
+      --glass-blur: 12px;
+      --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+      --card-shadow-hover: 0 6px 24px rgba(0, 0, 0, 0.08);
+      --display-gradient: linear-gradient(135deg, #f5f5f7, #ffffff);
+      --accent-blue: #0071e3;
+    }
+
+    /* 全局主题B：Apple Blue Glass */
+    [data-theme-style="blue"] {
+      --glass-bg: rgba(255, 255, 255, 0.82);
+      --glass-border: rgba(0, 113, 227, 0.1);
+      --glass-blur: 16px;
+      --card-shadow: 0 4px 16px rgba(0, 113, 227, 0.06);
+      --card-shadow-hover: 0 8px 30px rgba(0, 113, 227, 0.1);
+      --display-gradient: linear-gradient(135deg, rgba(0,113,227,0.12), rgba(90,200,250,0.15));
+      --accent-blue: #0071e3;
+    }
+
     /* 深色模式变量 - 参考macOS Dark Mode */
     [data-theme="dark"] {
       /* 主色调 - 仅用于小型强调元素 */
@@ -63,23 +97,33 @@
       --bg-tertiary: #3a3a3c;
       --bg-elevated: #48484a;
       
-      /* 大面积展示区渐变 */
-      --bg-gradient-dark: linear-gradient(135deg, #1c1c1e 0%, #29263d 100%);
-      --bg-gradient-card: linear-gradient(135deg, #2c2c2e 0%, #1c1c1e 100%);
-      
       /* 边框颜色 */
       --border-color: #38383a;
       --border-light: rgba(255, 255, 255, 0.06);
       
       /* 玻璃效果 */
-      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-bg: rgba(44, 44, 46, 0.8);
       --glass-border: rgba(255, 255, 255, 0.08);
-      --glass-blur: 20px;
+      --glass-blur: 16px;
       
-      /* 阴影 */
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
-      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
+      /* 卡片阴影 */
+      --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      --card-shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.3);
+      
+      /* 展示区渐变 */
+      --display-gradient: linear-gradient(135deg, #2c2c2e, #1c1c1e);
+    }
+
+    /* 深色模式下的主题变体 */
+    [data-theme="dark"][data-theme-style="silver"] {
+      --glass-bg: rgba(44, 44, 46, 0.85);
+      --display-gradient: linear-gradient(135deg, #2c2c2e, #3a3a3c);
+    }
+
+    [data-theme="dark"][data-theme-style="blue"] {
+      --glass-bg: rgba(44, 44, 46, 0.82);
+      --glass-border: rgba(10, 132, 255, 0.15);
+      --display-gradient: linear-gradient(135deg, rgba(10,132,255,0.1), rgba(90,200,250,0.08));
     }
 
     html {
@@ -179,10 +223,10 @@
       right: 0;
       height: 52px;
       z-index: 1000;
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: saturate(180%) blur(20px);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      background: var(--glass-bg);
+      backdrop-filter: saturate(180%) blur(var(--glass-blur));
+      -webkit-backdrop-filter: saturate(180%) blur(var(--glass-blur));
+      border-bottom: 1px solid var(--glass-border);
       transform: translateY(-100%);
       animation: slideDown 0.6s ease 1.4s forwards;
     }
@@ -542,17 +586,18 @@
       position: relative;
       border-radius: var(--radius-xl);
       overflow: hidden;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      background: var(--display-gradient);
       aspect-ratio: 4/3;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: var(--card-shadow);
     }
 
     .project-visual:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--card-shadow-hover);
     }
 
     .project-visual-content {
@@ -668,14 +713,15 @@
 
     .skill-card {
       padding: 40px;
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--border-light);
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      border: 1px solid var(--glass-border);
       border-radius: var(--radius-xl);
       transition: all var(--transition-slow);
       position: relative;
       overflow: hidden;
+      box-shadow: var(--card-shadow);
     }
 
     .skill-card::before {
@@ -1496,6 +1542,40 @@
       opacity: 1;
     }
 
+    /* 主题样式切换按钮 */
+    .theme-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .theme-style-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .theme-style-btn:hover {
+      background: var(--accent-blue);
+      color: white;
+      border-color: var(--accent-blue);
+    }
+    .theme-style-btn.active {
+      background: var(--accent-blue);
+      color: white;
+      border-color: var(--accent-blue);
+    }
+
     /* ========== 深色模式样式覆盖 ========== */
     [data-theme="dark"] .navbar {
       background: var(--glass-bg);
@@ -1508,11 +1588,10 @@
                   radial-gradient(circle at 70% 50%, rgba(41, 38, 61, 0.2) 0%, transparent 50%);
     }
     [data-theme="dark"] .skill-card {
-      background: var(--bg-secondary);
-      border-color: var(--border-light);
+      /* 使用CSS变量，无需覆盖 */
     }
     [data-theme="dark"] .skill-card:hover {
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      box-shadow: var(--card-shadow-hover);
     }
     [data-theme="dark"] .highlight-item,
     [data-theme="dark"] .sidebar-section {
@@ -1524,13 +1603,13 @@
       border-color: var(--glass-border);
     }
     [data-theme="dark"] .project-visual {
-      /* 不设置固定背景，让JavaScript动态控制 */
+      /* 使用CSS变量，无需覆盖 */
     }
     [data-theme="dark"] .project-card:hover {
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      box-shadow: var(--card-shadow-hover);
     }
     [data-theme="dark"] .blog-card:hover {
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      box-shadow: var(--card-shadow-hover);
     }
     [data-theme="dark"] .ai-chat-window {
       background: var(--bg-secondary);
@@ -1583,46 +1662,31 @@
       gap: 24px;
     }
     .blog-card {
-      background: var(--bg-secondary);
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
       border-radius: var(--radius-lg);
       overflow: hidden;
       transition: all var(--transition-normal);
       cursor: pointer;
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--card-shadow);
     }
     .blog-card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--card-shadow-hover);
     }
     .blog-card-image {
       width: 100%;
       height: 180px;
-      background: linear-gradient(135deg, var(--accent-blue) 0%, #5856d6 100%);
+      background: var(--display-gradient);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 48px;
       transition: background 0.3s ease;
     }
-    /* 博客卡片主题A：Silver Glass */
-    .blog-theme-silver .blog-card-image {
-      background: linear-gradient(135deg, #f5f5f7, #ffffff);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    }
-    .blog-theme-silver .blog-card-image::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-    /* 博客卡片主题B：Apple Blue Glass */
-    .blog-theme-blue .blog-card-image {
-      background: linear-gradient(135deg, rgba(0, 113, 227, 0.12), rgba(90, 200, 250, 0.18));
+    /* 博客卡片主题样式已移至全局主题系统 */
     }
     /* 深色模式兼容 */
     [data-theme="dark"] .blog-theme-silver .blog-card-image {
@@ -1666,26 +1730,6 @@
       font-size: 15px;
       color: var(--text-secondary);
       line-height: 1.5;
-    }
-
-    /* 博客主题切换按钮 */
-    .blog-theme-btn {
-      padding: 6px 14px;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-light);
-      border-radius: 980px;
-      font-size: 13px;
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .blog-theme-btn:hover {
-      background: var(--bg-tertiary);
-    }
-    .blog-theme-btn.active {
-      background: var(--accent-blue);
-      color: white;
-      border-color: var(--accent-blue);
     }
 
     /* ========== 项目详情弹窗 ========== */
@@ -1950,9 +1994,15 @@
         <li><a href="#skills">能力</a></li>
         <li><a href="about.html">关于</a></li>
         <li><a href="#blog">博客</a></li>
-        <li><a href="#about">关于</a></li>
         <li><a href="#contact" class="nav-cta">联系我</a></li>
-        <li><button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button></li>
+        <li>
+          <div class="theme-controls">
+            <button class="theme-style-btn" onclick="switchThemeStyle('default')" title="默认主题">D</button>
+            <button class="theme-style-btn" onclick="switchThemeStyle('silver')" title="Silver Glass">S</button>
+            <button class="theme-style-btn" onclick="switchThemeStyle('blue')" title="Apple Blue">B</button>
+            <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
+          </div>
+        </li>
       </ul>
     </div>
   </nav>
@@ -2145,12 +2195,6 @@
             查看全部文章
             <span class="btn-icon">→</span>
           </a>
-          <div class="blog-theme-switcher" style="display: flex; gap: 8px; align-items: center;">
-            <span style="font-size: 13px; color: var(--text-secondary);">卡片主题：</span>
-            <button class="blog-theme-btn active" onclick="switchBlogTheme('default')">默认</button>
-            <button class="blog-theme-btn" onclick="switchBlogTheme('silver')">Silver Glass</button>
-            <button class="blog-theme-btn" onclick="switchBlogTheme('blue')">Apple Blue</button>
-          </div>
         </div>
       </div>
       
@@ -2413,22 +2457,36 @@
   </div>
 
   <script>
-    // ========== 博客主题切换（测试功能） ==========
-    function switchBlogTheme(theme) {
-      const blogGrid = document.getElementById('blogGrid');
-      // 移除所有主题类
-      blogGrid.classList.remove('blog-theme-silver', 'blog-theme-blue');
-      // 添加选中的主题类
-      if (theme === 'silver') {
-        blogGrid.classList.add('blog-theme-silver');
-      } else if (theme === 'blue') {
-        blogGrid.classList.add('blog-theme-blue');
+    // ========== 全局主题样式切换 ==========
+    function switchThemeStyle(style) {
+      const html = document.documentElement;
+      // 移除所有主题样式属性
+      html.removeAttribute('data-theme-style');
+      // 添加选中的主题样式
+      if (style !== 'default') {
+        html.setAttribute('data-theme-style', style);
       }
+      // 保存到localStorage
+      localStorage.setItem('theme-style', style);
       // 更新按钮状态
-      document.querySelectorAll('.blog-theme-btn').forEach(btn => {
+      document.querySelectorAll('.theme-style-btn').forEach(btn => {
         btn.classList.remove('active');
       });
       event.target.classList.add('active');
+    }
+
+    // 初始化主题样式
+    function initThemeStyle() {
+      const savedStyle = localStorage.getItem('theme-style') || 'default';
+      if (savedStyle !== 'default') {
+        document.documentElement.setAttribute('data-theme-style', savedStyle);
+      }
+      // 更新按钮状态
+      document.querySelectorAll('.theme-style-btn').forEach(btn => {
+        if (btn.getAttribute('onclick').includes(`'${savedStyle}'`)) {
+          btn.classList.add('active');
+        }
+      });
     }
 
     // ========== 深色模式切换 ==========
@@ -2683,7 +2741,8 @@
 
     // ========== 页面加载动画 ==========
     window.addEventListener('load', function() {
-      initTheme(); // 初始化主题
+      initTheme(); // 初始化深色模式
+      initThemeStyle(); // 初始化主题样式
       setTimeout(function() {
         document.getElementById('pageLoader').classList.add('loaded');
       }, 1500);
