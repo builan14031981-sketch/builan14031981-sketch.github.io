@@ -2037,9 +2037,9 @@
         <li><a href="#contact" class="nav-cta">联系我</a></li>
         <li>
           <div class="theme-controls">
-            <button class="theme-style-btn active" onclick="switchThemeStyle('default')" title="默认主题（蓝紫渐变）">D</button>
-            <button class="theme-style-btn" onclick="switchThemeStyle('silver')" title="Silver Glass（极简银灰）">S</button>
-            <button class="theme-style-btn" onclick="switchThemeStyle('blue')" title="Apple Blue Glass（浅蓝玻璃）">B</button>
+            <button class="theme-style-btn active" onclick="switchThemeStyle('default', this)" title="默认主题（蓝紫渐变）">D</button>
+            <button class="theme-style-btn" onclick="switchThemeStyle('silver', this)" title="Silver Glass（极简银灰）">S</button>
+            <button class="theme-style-btn" onclick="switchThemeStyle('blue', this)" title="Apple Blue Glass（浅蓝玻璃）">B</button>
             <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button>
           </div>
         </li>
@@ -2499,7 +2499,7 @@
 
   <script>
     // ========== 全局主题样式切换 ==========
-    function switchThemeStyle(style) {
+    function switchThemeStyle(style, clickedBtn) {
       const html = document.documentElement;
       // 移除所有主题样式属性
       html.removeAttribute('data-theme-style');
@@ -2509,11 +2509,11 @@
       }
       // 保存到localStorage
       localStorage.setItem('theme-style', style);
-      // 更新按钮状态
+      // 更新按钮状态 - 确保只有一个active
       document.querySelectorAll('.theme-style-btn').forEach(btn => {
         btn.classList.remove('active');
       });
-      event.target.classList.add('active');
+      clickedBtn.classList.add('active');
     }
 
     // 初始化主题样式
@@ -2522,6 +2522,14 @@
       if (savedStyle !== 'default') {
         document.documentElement.setAttribute('data-theme-style', savedStyle);
       }
+      // 更新按钮状态
+      document.querySelectorAll('.theme-style-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('onclick').includes(`'${savedStyle}'`)) {
+          btn.classList.add('active');
+        }
+      });
+    }
       // 更新按钮状态
       document.querySelectorAll('.theme-style-btn').forEach(btn => {
         if (btn.getAttribute('onclick').includes(`'${savedStyle}'`)) {
