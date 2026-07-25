@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文章加载中... - 严志辉的博客</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* 主色调 */
+      --accent-blue: #0071e3;
+      --accent-blue-hover: #0077ed;
+      
+      /* 文字颜色 */
+      --text-primary: #1d1d1f;
+      --text-secondary: #86868b;
+      --text-tertiary: #6e6e73;
+      
+      /* 背景层次 */
+      --bg-primary: #ffffff;
+      --bg-secondary: #f5f5f7;
+      --bg-tertiary: #fbfbfd;
+      
+      /* 边框颜色 */
+      --border-color: #d2d2d7;
+      --border-light: rgba(0, 0, 0, 0.08);
+      
+      /* 玻璃效果 */
+      --glass-bg: rgba(255, 255, 255, 0.72);
+      --glass-border: rgba(0, 0, 0, 0.08);
+      --glass-blur: 20px;
+      
+      /* 圆角 */
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 28px;
+      
+      /* 阴影 */
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    /* 深色模式 - 参考macOS Dark Mode */
+    [data-theme="dark"] {
+      --accent-blue: #0a84ff;
+      --accent-blue-hover: #409cff;
+      
+      --text-primary: #f5f5f7;
+      --text-secondary: #a1a1a6;
+      --text-tertiary: #86868b;
+      
+      --bg-primary: #1d1d1f;
+      --bg-secondary: #2c2c2e;
+      --bg-tertiary: #3a3a3c;
+      
+      --border-color: #48484a;
+      --border-light: rgba(255, 255, 255, 0.08);
+      
+      --glass-bg: rgba(29, 29, 31, 0.8);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ========== 导航栏 ========== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      background: var(--glass-bg);
+      backdrop-filter: saturate(180%) blur(var(--glass-blur));
+      -webkit-backdrop-filter: saturate(180%) blur(var(--glass-blur));
+      border-bottom: 1px solid var(--glass-border);
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-back {
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-back:hover {
+      opacity: 0.8;
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border-color);
+    }
+
+    .nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      padding: 4px;
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      opacity: 1;
+    }
+
+    /* ========== 文章Hero区域 ========== */
+    .article-hero {
+      padding: 140px 40px 80px;
+      text-align: center;
+      background: var(--bg-primary);
+    }
+
+    .hero-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .article-category {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .article-title {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -2px;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .article-subtitle {
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      letter-spacing: -0.5px;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .article-cover {
+      width: 100%;
+      max-width: 800px;
+      height: 400px;
+      margin: 60px auto 0;
+      border-radius: var(--radius-xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 120px;
+    }
+
+    /* ========== 正文区域 ========== */
+    .article-content {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 80px 40px 120px;
+    }
+
+    .content-section {
+      margin-bottom: 48px;
+    }
+
+    .content-section h2 {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 24px;
+      margin-top: 64px;
+      letter-spacing: -1px;
+      line-height: 1.2;
+    }
+
+    .content-section h2:first-child {
+      margin-top: 0;
+    }
+
+    .content-section h3 {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      margin-top: 48px;
+      letter-spacing: -0.5px;
+    }
+
+    .content-section p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .content-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .content-section blockquote {
+      border-left: 4px solid var(--accent-blue);
+      padding: 24px 32px;
+      margin: 32px 0;
+      background: var(--bg-secondary);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    }
+
+    .content-section blockquote p {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text-primary);
+      font-style: italic;
+      margin-bottom: 0;
+    }
+
+    .content-section ul,
+    .content-section ol {
+      margin: 24px 0;
+      padding-left: 24px;
+    }
+
+    .content-section li {
+      font-size: 18px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+
+    .content-section strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .content-section code {
+      background: var(--bg-secondary);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 16px;
+      font-family: "SF Mono", Monaco, Consolas, monospace;
+    }
+
+    .content-section pre {
+      background: var(--bg-secondary);
+      padding: 24px;
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      margin: 32px 0;
+    }
+
+    .content-section pre code {
+      background: none;
+      padding: 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ========== 标签区域 ========== */
+    .article-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .tag {
+      padding: 10px 20px;
+      background: rgba(0, 113, 227, 0.08);
+      color: var(--accent-blue);
+      border-radius: 980px;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    /* ========== 作者信息 ========== */
+    .author-section {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 40px 80px;
+    }
+
+    .author-card {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 32px;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-light);
+    }
+
+    .author-avatar {
+      width: 80px;
+      height: 80px;
+      background: var(--bg-tertiary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      flex-shrink: 0;
+    }
+
+    .author-info {
+      flex: 1;
+    }
+
+    .author-name {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .author-bio {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ========== 相关文章 ========== */
+    .related-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px 120px;
+    }
+
+    .related-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .related-title {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -1px;
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .related-card {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid var(--border-light);
+    }
+
+    .related-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .related-cover {
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+    }
+
+    .related-content {
+      padding: 28px;
+    }
+
+    .related-category {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .related-name {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      letter-spacing: -0.3px;
+    }
+
+    .related-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ========== 页脚 ========== */
+    .footer {
+      background: var(--bg-secondary);
+      padding: 32px 0;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      text-align: center;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .footer-link {
+      color: var(--accent-blue);
+      text-decoration: none;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    /* ========== 响应式 ========== */
+    @media (max-width: 1024px) {
+      .related-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .article-hero {
+        padding: 120px 20px 60px;
+      }
+
+      .article-title {
+        font-size: 36px;
+        letter-spacing: -1.5px;
+      }
+
+      .article-subtitle {
+        font-size: 20px;
+      }
+
+      .article-cover {
+        height: 250px;
+        font-size: 80px;
+      }
+
+      .article-content {
+        padding: 60px 20px 80px;
+      }
+
+      .content-section h2 {
+        font-size: 28px;
+      }
+
+      .content-section h3 {
+        font-size: 22px;
+      }
+
+      .content-section p,
+      .content-section li {
+        font-size: 17px;
+      }
+
+      .content-section blockquote p {
+        font-size: 18px;
+      }
+
+      .author-section {
+        padding: 0 20px 60px;
+      }
+
+      .author-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 24px;
+      }
+
+      .related-section {
+        padding: 0 20px 80px;
+      }
+
+      .nav-container {
+        padding: 0 20px;
+      }
+
+      .nav-divider {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <a href="../index.html#blog" class="nav-back">← 返回首页</a>
+        <div class="nav-divider"></div>
+        <span class="nav-title">严志辉的博客</span>
+      </div>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
+    </div>
+  </nav>
+
+  <section class="article-hero" id="articleHero">
+    <div class="hero-container">
+      <div class="article-category" id="articleCategory">分类</div>
+      <h1 class="article-title" id="articleTitle">文章标题</h1>
+      <p class="article-subtitle" id="articleSubtitle">副标题</p>
+      <div class="article-meta">
+        <div class="meta-item" id="articleAuthor">
+          <span>👨‍💻</span>
+          <span>严志辉</span>
+        </div>
+        <div class="meta-item" id="articleDate">
+          <span>📅</span>
+          <span>2026年7月</span>
+        </div>
+        <div class="meta-item" id="articleReadTime">
+          <span>⏱️</span>
+          <span>约10分钟</span>
+        </div>
+      </div>
+      <div class="article-cover" id="articleCover">🤖</div>
+    </div>
+  </section>
+
+  <article class="article-content" id="articleContent">
+    <!-- 正文内容将通过JavaScript动态加载 -->
+  </article>
+
+  <div class="article-tags" id="articleTags" style="max-width: 760px; margin: 0 auto; padding: 0 40px;">
+    <!-- 标签将通过JavaScript动态加载 -->
+  </div>
+
+  <section class="author-section">
+    <div class="author-card">
+      <div class="author-avatar" id="authorAvatar">👨‍💻</div>
+      <div class="author-info">
+        <div class="author-name" id="authorName">严志辉</div>
+        <div class="author-bio" id="authorBio">AI辅助开发工程师，专注于用AI创造数字产品</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="related-section" id="relatedSection">
+    <div class="related-header">
+      <h2 class="related-title">相关文章</h2>
+    </div>
+    <div class="related-grid" id="relatedGrid">
+      <!-- 相关文章将通过JavaScript动态加载 -->
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <p class="footer-text">
+        © 2026 严志辉 · <a href="../index.html" class="footer-link">返回首页</a> · <a href="index.html" class="footer-link">全部文章</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // 主题切换
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      if (newTheme === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+        document.getElementById('themeToggle').textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        html.removeAttribute('data-theme');
+        document.getElementById('themeToggle').textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    // 初始化主题
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('themeToggle').textContent = '☀️';
+      }
+    }
+
+    // 获取URL参数
+    function getArticleId() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('id');
+    }
+
+    // 加载文章数据
+    async function loadArticle() {
+      const articleId = getArticleId();
+      
+      try {
+        const response = await fetch('../articles-detail.json');
+        const articles = await response.json();
+        const article = articles.find(a => a.id === articleId);
+        
+        if (article) {
+          renderArticle(article);
+          loadRelatedArticles(article.relatedArticles, articles);
+        } else {
+          showError('文章未找到');
+        }
+      } catch (error) {
+        console.error('加载文章失败:', error);
+        showError('加载文章失败');
+      }
+    }
+
+    // 渲染文章
+    function renderArticle(article) {
+      // 更新页面标题
+      document.title = `${article.title} - 严志辉的博客`;
+      
+      // 更新Hero区域
+      document.getElementById('articleCategory').textContent = article.category;
+      document.getElementById('articleTitle').textContent = article.title;
+      document.getElementById('articleSubtitle').textContent = article.subtitle;
+      document.getElementById('articleDate').querySelector('span:last-child').textContent = article.date;
+      document.getElementById('articleReadTime').querySelector('span:last-child').textContent = article.readTime;
+      document.getElementById('authorAvatar').textContent = article.author.avatar;
+      document.getElementById('authorName').textContent = article.author.name;
+      document.getElementById('authorBio').textContent = article.author.bio;
+      
+      // 更新封面
+      const coverEl = document.getElementById('articleCover');
+      coverEl.textContent = article.cover.emoji;
+      coverEl.style.background = article.cover.gradient;
+      
+      // 渲染正文
+      const contentEl = document.getElementById('articleContent');
+      let html = '';
+      let currentSection = '';
+      
+      article.content.forEach(block => {
+        switch (block.type) {
+          case 'heading':
+            if (currentSection) {
+              html += '</div>';
+            }
+            html += '<div class="content-section">';
+            currentSection = 'section';
+            if (block.level === 2) {
+              html += `<h2>${block.text}</h2>`;
+            } else if (block.level === 3) {
+              html += `<h3>${block.text}</h3>`;
+            }
+            break;
+          case 'paragraph':
+            if (!currentSection) {
+              html += '<div class="content-section">';
+              currentSection = 'section';
+            }
+            html += `<p>${block.text}</p>`;
+            break;
+          case 'quote':
+            if (!currentSection) {
+              html += '<div class="content-section">';
+              currentSection = 'section';
+            }
+            html += `<blockquote><p>${block.text}</p></blockquote>`;
+            break;
+        }
+      });
+      
+      if (currentSection) {
+        html += '</div>';
+      }
+      
+      contentEl.innerHTML = html;
+      
+      // 渲染标签
+      const tagsEl = document.getElementById('articleTags');
+      tagsEl.innerHTML = article.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+    }
+
+    // 加载相关文章
+    function loadRelatedArticles(relatedIds, allArticles) {
+      const relatedGrid = document.getElementById('relatedGrid');
+      const relatedArticles = allArticles.filter(a => relatedIds.includes(a.id));
+      
+      relatedGrid.innerHTML = relatedArticles.map(article => `
+        <a href="article.html?id=${article.id}" class="related-card">
+          <div class="related-cover" style="background: ${article.cover.gradient}">
+            ${article.cover.emoji}
+          </div>
+          <div class="related-content">
+            <div class="related-category">${article.category}</div>
+            <h3 class="related-name">${article.title}</h3>
+            <p class="related-desc">${article.subtitle}</p>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    // 显示错误
+    function showError(message) {
+      document.getElementById('articleContent').innerHTML = `
+        <div class="content-section" style="text-align: center; padding: 80px 0;">
+          <h2>${message}</h2>
+          <p>请返回首页查看其他文章。</p>
+        </div>
+      `;
+    }
+
+    // 初始化
+    window.addEventListener('load', function() {
+      initTheme();
+      loadArticle();
+    });
+  </script>
+</body>
+</html>
