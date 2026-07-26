@@ -2552,13 +2552,6 @@
         }
       });
     }
-      // 更新按钮状态
-      document.querySelectorAll('.theme-style-btn').forEach(btn => {
-        if (btn.getAttribute('onclick').includes(`'${savedStyle}'`)) {
-          btn.classList.add('active');
-        }
-      });
-    }
 
     // ========== 深色模式切换 ==========
     function toggleTheme() {
@@ -2815,10 +2808,24 @@
       }
     });
 
-    // ========== 页面加载动画 ==========
-    setTimeout(function() {
-      document.getElementById('pageLoader').classList.add('loaded');
-    }, 1500);
+    // ========== 页面加载动画 - 三重保障 ==========
+    function hideLoader() {
+      var loader = document.getElementById('pageLoader');
+      if (loader && !loader.classList.contains('loaded')) {
+        loader.classList.add('loaded');
+      }
+    }
+    
+    // 方案1：定时器
+    setTimeout(hideLoader, 1500);
+    
+    // 方案2：页面加载完成
+    window.addEventListener('load', function() {
+      setTimeout(hideLoader, 800);
+    });
+    
+    // 方案3：兜底保障
+    setTimeout(hideLoader, 3000);
 
     // ========== 滚动动画 ==========
     const observerOptions = {
