@@ -2817,13 +2817,25 @@
     });
 
     // ========== 页面加载动画 ==========
-    window.addEventListener('load', function() {
+    // 使用DOMContentLoaded，不等待图片加载
+    document.addEventListener('DOMContentLoaded', function() {
       initTheme(); // 初始化深色模式
       initThemeStyle(); // 初始化主题样式
-      // 等动画播放完再隐藏
-      setTimeout(function() {
-        document.getElementById('pageLoader').classList.add('loaded');
-      }, 1800);
+      
+      // 最多等2秒，不管资源是否加载完
+      var loaderHidden = false;
+      function hideLoader() {
+        if (!loaderHidden) {
+          loaderHidden = true;
+          document.getElementById('pageLoader').classList.add('loaded');
+        }
+      }
+      
+      // 2秒后自动隐藏
+      setTimeout(hideLoader, 2000);
+      
+      // 如果load事件触发了也隐藏
+      window.addEventListener('load', hideLoader);
     });
 
     // ========== 滚动动画 ==========
