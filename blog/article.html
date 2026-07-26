@@ -679,7 +679,7 @@
       const articleId = getArticleId();
       
       try {
-        const response = await fetch('../articles-detail.json');
+        const response = await fetch('https://builan14031981-sketch.github.io/articles-detail.json');
         const articles = await response.json();
         const article = articles.find(a => a.id === articleId);
         
