@@ -2842,20 +2842,9 @@
 
     // ========== 导航栏滚动效果 ==========
     let lastScroll = 0;
-    const navbar = document.querySelector('.navbar');
 
     window.addEventListener('scroll', function() {
       const currentScroll = window.pageYOffset;
-      const navbar = document.querySelector('.navbar');
-      
-      if (currentScroll > 100) {
-        navbar.style.background = 'var(--glass-bg)';
-        navbar.style.backdropFilter = 'saturate(180%) blur(var(--glass-blur))';
-      } else {
-        navbar.style.background = 'var(--glass-bg)';
-        navbar.style.backdropFilter = 'saturate(180%) blur(var(--glass-blur))';
-      }
-      
       lastScroll = currentScroll;
     });
 
