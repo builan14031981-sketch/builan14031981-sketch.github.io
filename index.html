@@ -2411,6 +2411,12 @@
             发送邮件联系我
             <span class="btn-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
           </a>
+          <div style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px;">
+            <span style="font-size: 12px; color: var(--accent-blue); background: rgba(0,113,227,0.08); padding: 4px 10px; border-radius: 980px;">AI开发</span>
+            <span style="font-size: 12px; color: var(--accent-blue); background: rgba(0,113,227,0.08); padding: 4px 10px; border-radius: 980px;">Web前端</span>
+            <span style="font-size: 12px; color: var(--accent-blue); background: rgba(0,113,227,0.08); padding: 4px 10px; border-radius: 980px;">UI设计</span>
+            <span style="font-size: 12px; color: var(--accent-blue); background: rgba(0,113,227,0.08); padding: 4px 10px; border-radius: 980px;">产品设计</span>
+          </div>
         </div>
         <div class="footer-links">
           <div class="footer-column">
@@ -2509,13 +2515,6 @@
       // 更新按钮状态
       document.querySelectorAll('.theme-style-btn').forEach(btn => {
         btn.classList.remove('active');
-        if (btn.getAttribute('onclick').includes(`'${savedStyle}'`)) {
-          btn.classList.add('active');
-        }
-      });
-    }
-      // 更新按钮状态
-      document.querySelectorAll('.theme-style-btn').forEach(btn => {
         if (btn.getAttribute('onclick').includes(`'${savedStyle}'`)) {
           btn.classList.add('active');
         }
