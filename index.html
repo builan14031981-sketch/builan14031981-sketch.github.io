@@ -13,9 +13,9 @@
     }
 
     :root {
-      /* Apple官方配色体系 */
-      --accent-blue: #0071e3;
-      --accent-blue-hover: #0077ed;
+      /* Apple官方配色体系 - 使用低饱和天蓝 */
+      --accent-blue: #5a9fd4;
+      --accent-blue-hover: #7eb4e8;
       --text-primary: #1d1d1f;
       --text-secondary: #86868b;
       --text-tertiary: #6e6e73;
@@ -34,11 +34,11 @@
       --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
       --card-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.15);
       
-      /* 展示区渐变 - 默认主题使用蓝紫渐变 */
-      --display-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      /* 展示区渐变 - 默认主题使用低饱和蓝紫渐变 */
+      --display-gradient: linear-gradient(135deg, #7eb4e8 0%, #9b8ec4 50%, #8b7bb8 100%);
       
-      /* 强调色渐变 */
-      --accent-gradient: linear-gradient(135deg, var(--accent-blue) 0%, #5856d6 100%);
+      /* 强调色渐变 - 统一使用浅天蓝 */
+      --accent-gradient: linear-gradient(135deg, #7eb4e8 0%, #5a9fd4 100%);
     }
 
     /* 全局主题A：Silver Glass - 暖灰中性色 */
@@ -612,6 +612,21 @@
     .project-visual:hover {
       transform: translateY(-3px);
       box-shadow: var(--card-shadow-hover);
+    }
+
+    /* 项目1：Electron智能便签 - 浅天蓝→雾灰蓝 */
+    .project-visual-1 {
+      background: linear-gradient(135deg, #a8d4f0 0%, #8cb8d8 50%, #b0c4d8 100%) !important;
+    }
+
+    /* 项目2：本地AI助手系统 - 灰蓝→极淡雾紫 */
+    .project-visual-2 {
+      background: linear-gradient(135deg, #8c9bb8 0%, #9b8ec4 50%, #b8a8d0 100%) !important;
+    }
+
+    /* 项目3：智能AI助手系统 - 浅灰紫→深靛蓝 */
+    .project-visual-3 {
+      background: linear-gradient(135deg, #a89ec4 0%, #7b6fa8 50%, #4a5580 100%) !important;
     }
 
     .project-visual-content {
@@ -2128,7 +2143,7 @@
       <div class="project-showcase">
         <!-- 项目1：Electron智能便签工具 -->
         <div class="project-item fade-in-up">
-          <div class="project-visual">
+          <div class="project-visual project-visual-1">
             <div class="project-visual-content">
               <svg class="project-visual-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/></svg>
               <div class="project-visual-title">智能便签</div>
@@ -2152,7 +2167,7 @@
         
         <!-- 项目2：AI助手系统 -->
         <div class="project-item reverse fade-in-up">
-          <div class="project-visual">
+          <div class="project-visual project-visual-2">
             <div class="project-visual-content">
               <svg class="project-visual-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M4 12a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1"/><path d="M6 12v7a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-7"/><path d="M10 16h4"/></svg>
               <div class="project-visual-title">AI助手</div>
@@ -2177,7 +2192,7 @@
         
         <!-- 项目3：智能AI助手 -->
         <div class="project-item fade-in-up">
-          <div class="project-visual">
+          <div class="project-visual project-visual-3">
             <div class="project-visual-content">
               <svg class="project-visual-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M19.938 10.5a4 4 0 0 1 .585.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M19.967 17.484A4 4 0 0 1 18 18"/></svg>
               <div class="project-visual-title">智能助手</div>
