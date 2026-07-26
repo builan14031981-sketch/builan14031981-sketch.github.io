@@ -13,9 +13,9 @@
     }
 
     :root {
-      /* Apple官方配色体系 - 使用低饱和天蓝 */
-      --accent-blue: #5a9fd4;
-      --accent-blue-hover: #7eb4e8;
+      /* Apple官方配色体系 */
+      --accent-blue: #0071e3;
+      --accent-blue-hover: #0077ed;
       --text-primary: #1d1d1f;
       --text-secondary: #86868b;
       --text-tertiary: #6e6e73;
@@ -37,8 +37,8 @@
       /* 展示区渐变 - 默认主题使用低饱和蓝紫渐变 */
       --display-gradient: linear-gradient(135deg, #7eb4e8 0%, #9b8ec4 50%, #8b7bb8 100%);
       
-      /* 强调色渐变 - 统一使用浅天蓝 */
-      --accent-gradient: linear-gradient(135deg, #7eb4e8 0%, #5a9fd4 100%);
+      /* 强调色渐变 */
+      --accent-gradient: linear-gradient(135deg, var(--accent-blue) 0%, #5856d6 100%);
     }
 
     /* 全局主题A：Silver Glass - 暖灰中性色 */
@@ -614,19 +614,25 @@
       box-shadow: var(--card-shadow-hover);
     }
 
-    /* 项目1：Electron智能便签 - 浅天蓝→雾灰蓝 */
+    /* D配色 - 三个项目卡片差异化渐变 */
     .project-visual-1 {
       background: linear-gradient(135deg, #a8d4f0 0%, #8cb8d8 50%, #b0c4d8 100%) !important;
     }
-
-    /* 项目2：本地AI助手系统 - 灰蓝→极淡雾紫 */
     .project-visual-2 {
       background: linear-gradient(135deg, #8c9bb8 0%, #9b8ec4 50%, #b8a8d0 100%) !important;
     }
-
-    /* 项目3：智能AI助手系统 - 浅灰紫→深靛蓝 */
     .project-visual-3 {
       background: linear-gradient(135deg, #a89ec4 0%, #7b6fa8 50%, #4a5580 100%) !important;
+    }
+
+    /* S和B配色覆盖D配色的差异化渐变 */
+    [data-theme-style="silver"] .project-visual-1,
+    [data-theme-style="silver"] .project-visual-2,
+    [data-theme-style="silver"] .project-visual-3,
+    [data-theme-style="blue"] .project-visual-1,
+    [data-theme-style="blue"] .project-visual-2,
+    [data-theme-style="blue"] .project-visual-3 {
+      background: var(--display-gradient) !important;
     }
 
     .project-visual-content {
@@ -2865,7 +2871,7 @@
       }
     });
 
-    // ========== 页面加载动画 - 三重保障 ==========
+    // ========== 页面加载动画 - 只在首次访问时播放 ==========
     function hideLoader() {
       var loader = document.getElementById('pageLoader');
       if (loader && !loader.classList.contains('loaded')) {
@@ -2873,16 +2879,39 @@
       }
     }
     
-    // 方案1：定时器
-    setTimeout(hideLoader, 1500);
+    // 检查是否首次访问
+    const hasVisited = sessionStorage.getItem('hasVisited');
     
-    // 方案2：页面加载完成
+    if (hasVisited) {
+      // 非首次访问，立即隐藏
+      hideLoader();
+    } else {
+      // 首次访问，播放动画
+      sessionStorage.setItem('hasVisited', 'true');
+      
+      // 方案1：定时器
+      setTimeout(hideLoader, 1500);
+      
+      // 方案2：页面加载完成
+      window.addEventListener('load', function() {
+        setTimeout(hideLoader, 800);
+      });
+      
+      // 方案3：兜底保障
+      setTimeout(hideLoader, 3000);
+    }
+
+    // ========== 从外部页面返回时自动定位到锚点 ==========
     window.addEventListener('load', function() {
-      setTimeout(hideLoader, 800);
+      const hash = window.location.hash;
+      if (hash) {
+        const target = document.querySelector(hash);
+        if (target) {
+          // 立即滚动，不用动画
+          target.scrollIntoView({ behavior: 'instant' });
+        }
+      }
     });
-    
-    // 方案3：兜底保障
-    setTimeout(hideLoader, 3000);
 
     // ========== 滚动动画 ==========
     const observerOptions = {
@@ -3176,3 +3205,4 @@
 
 </body>
 </html>
+
