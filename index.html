@@ -729,12 +729,10 @@
 
     .skill-card {
       padding: 40px;
-      background: var(--glass-bg);
-      backdrop-filter: blur(var(--glass-blur));
-      -webkit-backdrop-filter: blur(var(--glass-blur));
-      border: 1px solid var(--glass-border);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
       border-radius: var(--radius-xl);
-      transition: all var(--transition-slow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       position: relative;
       overflow: hidden;
       box-shadow: var(--card-shadow);
@@ -1594,9 +1592,8 @@
       height: 28px;
       border-radius: 50%;
       border: 1px solid var(--glass-border);
-      background: var(--glass-bg);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
       cursor: pointer;
       font-size: 11px;
       font-weight: 600;
@@ -1703,12 +1700,10 @@
       gap: 24px;
     }
     .blog-card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(var(--glass-blur));
-      -webkit-backdrop-filter: blur(var(--glass-blur));
+      background: var(--bg-secondary);
       border-radius: var(--radius-lg);
       overflow: hidden;
-      transition: all var(--transition-normal);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
       border: 1px solid var(--glass-border);
       box-shadow: var(--card-shadow);
