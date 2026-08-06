@@ -6,7 +6,7 @@
     "category": "AI实践",
     "date": "2026年7月",
     "cover": "🤖",
-    "url": "blog/article.html?id=ai-collaboration",
+    "url": "article.html?id=ai-collaboration",
     "featured": true
   },
   {
@@ -16,7 +16,7 @@
     "category": "AI应用",
     "date": "2026年7月",
     "cover": "🏢",
-    "url": "blog/article.html?id=ai-enterprise",
+    "url": "article.html?id=ai-enterprise",
     "featured": true
   },
   {
@@ -26,7 +26,7 @@
     "category": "设计探索",
     "date": "2026年7月",
     "cover": "🎨",
-    "url": "blog/article.html?id=design-aesthetics",
+    "url": "article.html?id=design-aesthetics",
     "featured": true
   }
 ]
