@@ -1,0 +1,10 @@
+# 本地文档与交接记录（不推送到线上）
+docs/
+
+# 旧版本与备份（仅本地保留）
+old/
+
+# 系统文件
+Thumbs.db
+Desktop.ini
+.DS_Store
