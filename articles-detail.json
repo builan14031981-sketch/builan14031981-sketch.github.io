@@ -8,11 +8,11 @@
     "readTime": "约10分钟",
     "author": {
       "name": "严志辉",
-      "avatar": "👨‍💻",
+      "avatar": "user",
       "bio": "AI辅助开发工程师，专注于用AI创造数字产品"
     },
     "cover": {
-      "emoji": "🤖",
+      "icon": "robot",
       "gradient": "linear-gradient(135deg, #0071e3 0%, #5856d6 100%)"
     },
     "tags": ["AI Agent", "开发实践", "Prompt设计", "工作流"],
@@ -240,11 +240,11 @@
     "readTime": "约12分钟",
     "author": {
       "name": "严志辉",
-      "avatar": "👨‍💻",
+      "avatar": "user",
       "bio": "AI辅助开发工程师，专注于用AI创造数字产品"
     },
     "cover": {
-      "emoji": "🏢",
+      "icon": "building",
       "gradient": "linear-gradient(135deg, #302b63 0%, #24243e 100%)"
     },
     "tags": ["Ollama", "Qwen3", "本地部署", "企业AI"],
@@ -334,11 +334,11 @@
     "readTime": "约8分钟",
     "author": {
       "name": "严志辉",
-      "avatar": "👨‍💻",
+      "avatar": "user",
       "bio": "AI辅助开发工程师，专注于用AI创造数字产品"
     },
     "cover": {
-      "emoji": "🎨",
+      "icon": "palette",
       "gradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
     },
     "tags": ["设计美学", "Apple HIG", "UI设计", "设计理念"],

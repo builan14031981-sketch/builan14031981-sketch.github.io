@@ -579,7 +579,7 @@
         <div class="nav-divider"></div>
         <span class="nav-title">严志辉的博客</span>
       </div>
-      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="切换主题"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button>
     </div>
   </nav>
 
@@ -590,19 +590,19 @@
       <p class="article-subtitle" id="articleSubtitle">副标题</p>
       <div class="article-meta">
         <div class="meta-item" id="articleAuthor">
-          <span>👨‍💻</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           <span>严志辉</span>
         </div>
         <div class="meta-item" id="articleDate">
-          <span>📅</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
           <span>2026年7月</span>
         </div>
         <div class="meta-item" id="articleReadTime">
-          <span>⏱️</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
           <span>约10分钟</span>
         </div>
       </div>
-      <div class="article-cover" id="articleCover">🤖</div>
+      <div class="article-cover" id="articleCover"></div>
     </div>
   </section>
 
@@ -616,7 +616,7 @@
 
   <section class="author-section">
     <div class="author-card">
-      <div class="author-avatar" id="authorAvatar">👨‍💻</div>
+      <div class="author-avatar" id="authorAvatar"></div>
       <div class="author-info">
         <div class="author-name" id="authorName">严志辉</div>
         <div class="author-bio" id="authorBio">AI辅助开发工程师，专注于用AI创造数字产品</div>
@@ -650,11 +650,11 @@
       
       if (newTheme === 'dark') {
         html.setAttribute('data-theme', 'dark');
-        document.getElementById('themeToggle').textContent = '☀️';
+        document.getElementById('themeToggle').innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>';
         localStorage.setItem('theme', 'dark');
       } else {
         html.removeAttribute('data-theme');
-        document.getElementById('themeToggle').textContent = '🌙';
+        document.getElementById('themeToggle').innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>';
         localStorage.setItem('theme', 'light');
       }
     }
@@ -664,9 +664,17 @@
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
-        document.getElementById('themeToggle').textContent = '☀️';
+        document.getElementById('themeToggle').innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>';
       }
     }
+
+    // 封面图标库
+    const coverIcons = {
+      robot: '<svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5"><path d="M12 8V4H8"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M4 12a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1"/><path d="M6 12v7a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-7"/></svg>',
+      building: '<svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v3"/><path d="M12 12h.01"/></svg>',
+      palette: '<svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5"><circle cx="13.5" cy="6.5" r="0.5"/><circle cx="17.5" cy="10.5" r="0.5"/><circle cx="8.5" cy="7.5" r="0.5"/><circle cx="6.5" cy="12.5" r="0.5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2Z"/></svg>',
+      user: '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
+    };
 
     // 获取URL参数
     function getArticleId() {
@@ -679,7 +687,7 @@
       const articleId = getArticleId();
       
       try {
-        const response = await fetch('https://builan14031981-sketch.github.io/articles-detail.json');
+        const response = await fetch('../articles-detail.json');
         const articles = await response.json();
         const article = articles.find(a => a.id === articleId);
         
@@ -706,13 +714,13 @@
       document.getElementById('articleSubtitle').textContent = article.subtitle;
       document.getElementById('articleDate').querySelector('span:last-child').textContent = article.date;
       document.getElementById('articleReadTime').querySelector('span:last-child').textContent = article.readTime;
-      document.getElementById('authorAvatar').textContent = article.author.avatar;
+      document.getElementById('authorAvatar').innerHTML = coverIcons[article.author.avatar] || '';
       document.getElementById('authorName').textContent = article.author.name;
       document.getElementById('authorBio').textContent = article.author.bio;
       
       // 更新封面
       const coverEl = document.getElementById('articleCover');
-      coverEl.textContent = article.cover.emoji;
+      coverEl.innerHTML = coverIcons[article.cover.icon] || '';
       
       // 检查是否为深色模式
       const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -784,7 +792,7 @@
         return `
           <a href="article.html?id=${article.id}" class="related-card">
             <div class="related-cover" style="${coverStyle}">
-              ${article.cover.emoji}
+              ${coverIcons[article.cover.icon] || ''}
             </div>
             <div class="related-content">
               <div class="related-category">${article.category}</div>

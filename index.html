@@ -2304,7 +2304,7 @@
       </div>
       
       <div class="blog-grid" id="blogGrid">
-        <div class="blog-card fade-in-up" onclick="window.location.href='blog-ai-collaboration.html'">
+        <div class="blog-card fade-in-up" onclick="window.location.href='blog/article.html?id=ai-collaboration'">
           <div class="blog-card-image"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8V4H8"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M4 12a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1"/><path d="M6 12v7a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-7"/></svg></div>
           <div class="blog-card-content">
             <div class="blog-card-meta">
@@ -2316,7 +2316,7 @@
           </div>
         </div>
         
-        <div class="blog-card fade-in-up" onclick="window.location.href='blog-ai-enterprise.html'">
+        <div class="blog-card fade-in-up" onclick="window.location.href='blog/article.html?id=ai-enterprise'">
           <div class="blog-card-image"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v3"/><path d="M12 12h.01"/></svg></div>
           <div class="blog-card-content">
             <div class="blog-card-meta">
@@ -2328,7 +2328,7 @@
           </div>
         </div>
         
-        <div class="blog-card fade-in-up" onclick="window.location.href='blog-design-aesthetics.html'">
+        <div class="blog-card fade-in-up" onclick="window.location.href='blog/article.html?id=design-aesthetics'">
           <div class="blog-card-image"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="13.5" cy="6.5" r="0.5"/><circle cx="17.5" cy="10.5" r="0.5"/><circle cx="8.5" cy="7.5" r="0.5"/><circle cx="6.5" cy="12.5" r="0.5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2Z"/></svg></div>
           <div class="blog-card-content">
             <div class="blog-card-meta">
@@ -2546,10 +2546,6 @@
           <a href="https://github.com/builan14031981-sketch?tab=repositories" target="_blank">GitHub仓库</a>
         </div>
         <span class="footer-copyright">© 2026 严志辉. 保留所有权利.</span>
-        <div class="footer-legal">
-          <a href="#">隐私政策</a>
-          <a href="#">使用条款</a>
-        </div>
       </div>
     </div>
   </footer>
@@ -2955,7 +2951,7 @@
       });
     });
 
-    // ========== AI助手交互（接入小米API） ==========
+    // ========== AI助手交互（离线预设回复） ==========
     const aiButton = document.getElementById('aiButton');
     const aiChatWindow = document.getElementById('aiChatWindow');
     const aiChatClose = document.getElementById('aiChatClose');
@@ -2964,70 +2960,43 @@
     const aiChatMessages = document.getElementById('aiChatMessages');
     const aiQuickBtns = document.querySelectorAll('.ai-quick-btn');
 
-    // API配置
-    const API_CONFIG = {
-      endpoint: 'https://token-plan-cn.xiaomimimo.com/v1/chat/completions',
-      token: 'tp-cwfqnx68f5htccn68acar6m9wv2rw1lfqfhf34kv66hwio7u',
-      model: 'mimo-v2.5-pro'
-    };
-
-    // 系统提示词 - 更智能
-    const SYSTEM_PROMPT = `你是严志辉的AI助手，一个智能、专业、友好的虚拟助手。
-
-【关于严志辉】
-- 身份：AI辅助开发工程师
-- 背景：环境艺术设计专业毕业，从设计出发探索AI与数字创造
-- 专长：使用AI Agent构建数字产品，连接设计与开发
-- 核心理念：设计关注人与体验，技术负责实现可能，AI是连接两者的桥梁
-
-【个人故事】
-- 大学学习环境艺术设计，培养了对视觉、美感和用户体验的敏感度
-- 毕业后发现传统设计工具限制了想法的实现，开始探索人工智能
-- 通过AI，完成了个人网站设计与开发、桌面应用开发、本地模型部署等项目
-- 相信：创造不一定只能依靠传统路径，拥有设计思维的人也可以通过技术工具实现想法
-
-【核心项目】
-1. Electron智能便签工具 - 桌面端效率工具，支持多书签、主题切换、Mini Window
-2. 本地AI助手系统 - 企业级私有化AI部署，集成Ollama/DeepSeek/Qwen
-3. 产品展示网站 - Apple HIG风格，展示设计审美与开发能力
-
-【技能矩阵】
-- 设计：UI/UX、视觉设计、Apple HIG、产品设计
-- AI：AI Agent、本地模型部署、Prompt设计、智能应用开发
-- 开发：Electron、HTML/CSS/JS、Node.js、前端开发
-
-【工作经历】
-- 竞途网络 - 服务顾问
-- 浙江格子商务 - 销售专员
-- 宁波铭点装饰 - 项目助理
-
-【教育背景】
-- 浙江纺织服装职业技术学院 - 环境艺术设计（软装方向）
-
-【成就】
-- 独立运营短视频内容，累计播放量150W+
-
-【联系方式】
-- 邮箱：3220389580@qq.com
-- GitHub：https://github.com/builan14031981-sketch
-
-【你的能力】
-1. 回答关于严志辉的一切问题（项目、技能、经历、联系方式、个人故事）
-2. 提供技术咨询（AI开发、Web开发、设计相关）
-3. 可以讨论技术趋势、行业动态
-4. 帮助访客了解如何与严志辉合作
-5. 回答通用问题，展现智能助手的能力
-
-【回复风格】
-- 友好、专业、简洁
-- 使用emoji增加亲和力
-- 回答控制在3-5句话内
-- 如果不确定，诚实说明`;
-
-    // 对话历史
-    let conversationHistory = [
-      { role: 'system', content: SYSTEM_PROMPT }
+    // 离线预设知识库（关键词匹配）
+    const aiKnowledge = [
+      {
+        keywords: ['项目', '作品', '做了', 'products', '开发过'],
+        reply: '严志辉做过的主要项目有：1）Electron智能便签工具——桌面效率工具，支持多书签、7套主题、Mini Window；2）本地AI助手系统——企业级私有化AI部署，集成Ollama/DeepSeek/Qwen；3）智能AI助手系统——可接入企业微信，支持知识库读取、联网搜索。'
+      },
+      {
+        keywords: ['趋势', '行业', '动态', '未来', '发展', '大模型', 'agent'],
+        reply: '当前AI趋势集中在：AI Agent自动化、本地大模型私有化部署、多模态应用与端侧AI。严志辉重点关注如何把AI Agent落地到真实产品中，提升个人与团队的创造效率。'
+      },
+      {
+        keywords: ['技术', '能力', '技能', '擅长', '会什么', 'skill'],
+        reply: '严志辉的专长包括：AI Agent开发、本地大模型部署（Ollama/Qwen/DeepSeek）、Prompt设计、前端开发（HTML/CSS/JS、Electron、Node.js），以及UI/UX设计，结合设计思维与AI创造数字产品。'
+      },
+      {
+        keywords: ['联系', '合作', '邮箱', '邮件', '微信', 'contact', '方式'],
+        reply: '可以通过以下方式联系严志辉：邮箱 3220389580@qq.com，GitHub https://github.com/builan14031981-sketch，也欢迎在首页的联系区域留下信息。'
+      },
+      {
+        keywords: ['帮我', '能做什么', '干什么', 'help', '服务'],
+        reply: '我可以为你介绍严志辉的项目、技术能力、联系方式，也可以聊聊AI、开发和设计相关的技术话题。直接输入你的问题即可。'
+      }
     ];
+
+    // 兜底回复
+    const aiDefaultReply = '抱歉，我暂时只支持离线预设回复。你可以试试问我：严志辉做过哪些项目、擅长什么技术、如何联系他，或者聊聊AI相关的趋势话题。';
+
+    // 根据关键词匹配回复
+    function getAiReply(message) {
+      const lower = message.toLowerCase();
+      for (const item of aiKnowledge) {
+        if (item.keywords.some(k => lower.includes(k))) {
+          return item.reply;
+        }
+      }
+      return aiDefaultReply;
+    }
 
     // 切换聊天窗口
     aiButton.addEventListener('click', function() {
@@ -3038,80 +3007,8 @@
       aiChatWindow.classList.remove('open');
     });
 
-    // 显示加载状态
-    function showLoading() {
-      const loadingDiv = document.createElement('div');
-      loadingDiv.className = 'ai-message bot loading';
-      loadingDiv.id = 'aiLoading';
-      loadingDiv.innerHTML = '<span class="loading-dots">思考中</span>';
-      aiChatMessages.appendChild(loadingDiv);
-      aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
-    }
-
-    // 移除加载状态
-    function hideLoading() {
-      const loading = document.getElementById('aiLoading');
-      if (loading) loading.remove();
-    }
-
-    // 调用API
-    async function callAI(userMessage) {
-      conversationHistory.push({ role: 'user', content: userMessage });
-
-      try {
-        // 创建fetch请求
-        const fetchPromise = fetch(API_CONFIG.endpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${API_CONFIG.token}`
-          },
-          body: JSON.stringify({
-            model: API_CONFIG.model,
-            messages: conversationHistory,
-            temperature: 0.7,
-            max_tokens: 800,
-            enable_search: true
-          })
-        });
-
-        // 15秒超时
-        const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('请求超时')), 15000)
-        );
-
-        const response = await Promise.race([fetchPromise, timeoutPromise]);
-
-        if (!response.ok) {
-          throw new Error(`API请求失败: ${response.status}`);
-        }
-
-        const data = await response.json();
-        const aiReply = data.choices[0].message.content;
-        
-        // 添加到对话历史
-        conversationHistory.push({ role: 'assistant', content: aiReply });
-        
-        // 限制历史长度
-        if (conversationHistory.length > 21) {
-          conversationHistory = [
-            conversationHistory[0],
-            ...conversationHistory.slice(-20)
-          ];
-        }
-
-        return aiReply;
-      } catch (error) {
-        console.error('AI API错误:', error);
-        if (error.message === '请求超时') {
-          return '回复超时，请稍后再试或通过页脚联系方式联系严志辉';
-        }
-        return '抱歉，AI服务暂时不可用。请稍后再试或通过页脚联系方式直接联系严志辉。';
-      }
-    }
-
-    // 发送消息
-    async function sendMessage(message) {
+    // 发送消息（离线预设回复）
+    function sendMessage(message) {
       if (!message.trim()) return;
 
       // 添加用户消息
@@ -3123,16 +3020,11 @@
       // 清空输入
       aiChatInput.value = '';
       aiChatSend.disabled = true;
-      aiChatInput.disabled = true;
 
-      // 显示加载
-      showLoading();
+      // 生成离线回复
+      const aiReply = getAiReply(message);
 
-      // 调用API
-      const aiReply = await callAI(message);
-
-      // 移除加载，显示回复
-      hideLoading();
+      // 显示回复
       const botMessage = document.createElement('div');
       botMessage.className = 'ai-message bot';
       botMessage.textContent = aiReply;
